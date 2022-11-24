@@ -1,0 +1,214 @@
+﻿@using System.Reflection
+
+@using System.ComponentModel
+@using sigmaHashAlpha.Models.Products
+
+@{
+	Layout = null;
+}
+@model Case
+
+<div class="webtitle editortitle">
+	Keyboard Editor
+</div>
+
+<div class="formcontainer">
+	<div>
+		@using (Html.BeginForm("AddProduct", "CAS", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formholder" }))
+		{
+			<div class="productform">			
+				<div class="formimages">
+					<div class="previewer">
+						<div class="prodslider">		    
+							<div id="gal1" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal2" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal3" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal4" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal5" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal6" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+						</div>
+					</div>
+					<div class="gallerycontainer">
+
+						<div class="onepic">
+							<input type="file" asp-for="Images" id="addpic1" multiple="false" accept="image/png, image/jpeg"  hidden>
+							<label for="addpic1"><i class="bi bi-file-earmark-plus"></i></label>
+
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic2" accept="image/png, image/jpeg" hidden>
+							<label for="addpic2"><i class="bi bi-file-earmark-plus"></i></label>
+
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic3" accept="image/png, image/jpeg" hidden>
+							<label for="addpic3"><i class="bi bi-file-earmark-plus"></i></label>
+
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic4" accept="image/png, image/jpeg" hidden>
+							<label for="addpic4"><i class="bi bi-file-earmark-plus"></i></label>
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic5" accept="image/png, image/jpeg" hidden>
+							<label for="addpic6"><i class="bi bi-file-earmark-plus"></i></label>
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic6" accept="image/png, image/jpeg" hidden>
+							<label for="addpic6"><i class="bi bi-file-earmark-plus"></i></label>
+						</div>
+					</div>
+				</div>
+
+				<div class="productinputs">
+					<div class=" attrP">
+						<div class="attrsubt">Brand:</div>
+						@Html.EditorFor(m => m.Brand, "test", new { htmlAttributes = new { @class=""}}) 	
+					</div>
+					<div class=" attrP">
+						<div class="attrsubt">Model:</div> 
+						@Html.EditorFor(m => m.Model, "test", new { htmlAttributes = new { @class=""}}) 	
+					</div>
+					<div class=" attrP">
+						<div class="attrsubt">Price:</div> 
+						@Html.EditorFor(m => m.Price, "test", new { htmlAttributes = new { @class="priceinput", placeholder="00.00"  }}) $	
+
+					</div>
+
+
+					<div class="proddetails">
+						<div><span class="detail"><i class="bi bi-shield-shaded"></i> &nbsp Garantía - &nbsp</span> <span>@Html.EditorFor(m => m.Warranty, "test", new { htmlAttributes = new { @class="", @min="0" }})   </span> </div>
+						<div><span class="detail"><i class="bi bi-truck"></i> &nbsp Ships nationally &nbsp</span> <span>@Html.CheckBoxFor(m => m.ShipsNational, new { htmlAttributes = new { @class="" }})   </span> </div>
+						<div><span class="detail"><span class="material-symbols-outlined">south_america</span> &nbsp Ships internationally &nbsp</span> 
+							<span>@Html.CheckBoxFor(m => m.ShipsInternational, new { htmlAttributes = new { @class="" }})   </span> </div>
+					</div>
+
+					<div id="editinfo">  <i class="bi bi-info"></i>- First in order image will be used as Thumbnail for store listing of products. </div>
+
+					<div class="boxpreview">
+
+
+					</div>
+					<input asp-for="Category"  value="Case" hidden />
+				</div>
+
+			</div>
+
+			<div class="specscontainer" style="height: 500px;">
+				<div class="attrsubt">GENERAL</div>
+				<div class="attr  attrB">
+					@Html.LabelFor(m => m.FactorMother) 
+					@Html.EditorFor(m => m.FactorMother, new { htmlAttributes = new { @class="", @type="text", @placeholder="I.e:ITX, M-ATX,ATX, E-ATX"}}) 					</div>
+				<div class="attr attrNum">
+					@Html.LabelFor(m => m.TopPositionPSU) 
+					@Html.CheckBoxFor(m => m.TopPositionPSU) 
+				</div>
+				<div class="attr  attrB attrNum">
+					@Html.LabelFor(m => m.SideWindow) 
+					@Html.CheckBoxFor(m => m.SideWindow)
+				</div>
+				<div class="attr">
+					@Html.LabelFor(m => m.Color) 
+					@Html.EditorFor(m => m.Color, new { htmlAttributes = new { @class="", @type="text"}})  	
+				</div>
+				<div class="attr attrB  attrNum">
+					@Html.LabelFor(m => m.RBG) 
+					@Html.EditorFor(m => m.RBG, new { htmlAttributes = new { @class="", @type="number"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.RGBControl) 
+					@Html.CheckBoxFor(m => m.RGBControl) 	
+				</div>
+
+
+								<div class="attrsubt">CONECTIVIDAD</div>
+
+				<div class="attr attrB attrNum ">
+					@Html.LabelFor(m => m.USB20front) 
+					@Html.EditorFor(m => m.USB20front, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.USB20front) 
+					@Html.EditorFor(m => m.USB20front, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrB attrNum ">
+					@Html.LabelFor(m => m.USB30front) 
+					@Html.EditorFor(m => m.USB30front, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.USBTypeC) 
+					@Html.EditorFor(m => m.USBTypeC, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrB attrNum ">
+					@Html.LabelFor(m => m.USBTypeCInternal) 
+					@Html.EditorFor(m => m.USBTypeCInternal, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.HDFrontAudio) 
+					@Html.CheckBoxFor(m => m.HDFrontAudio) 	
+				</div>
+
+				<br/><br/>
+
+				<div class="attrsubt">COOLING</div>
+
+				<div class="attr attrNum attrB">
+					@Html.LabelFor(m => m.Fans80mmSupported) 
+					@Html.EditorFor(m => m.Fans80mmSupported, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.Fans80mmIncluded) 
+					@Html.EditorFor(m => m.Fans80mmIncluded, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum attrB">
+					@Html.LabelFor(m => m.Fans120mmSupported) 
+					@Html.EditorFor(m => m.Fans120mmSupported, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.Fans120mmIncluded) 
+					@Html.EditorFor(m => m.Fans120mmIncluded, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum attrB">
+					@Html.LabelFor(m => m.Fans140mmSupported) 
+					@Html.EditorFor(m => m.Fans140mmSupported, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.Fans140mmIncluded) 
+					@Html.EditorFor(m => m.Fans140mmIncluded, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum attrB">
+					@Html.LabelFor(m => m.Fans200mmSupported) 
+					@Html.EditorFor(m => m.Fans200mmSupported, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.Fans200mmIncluded) 
+					@Html.EditorFor(m => m.Fans200mmIncluded, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum attrB">
+					@Html.LabelFor(m => m.Radiator240mmSupport) 
+					@Html.EditorFor(m => m.Radiator240mmSupport, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.Radiator280mmSupport) 
+					@Html.EditorFor(m => m.Radiator280mmSupport, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum attrB">
+					@Html.LabelFor(m => m.Radiator360mmSupport) 
+					@Html.EditorFor(m => m.Radiator360mmSupport, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+				<div class="attr attrNum ">
+					@Html.LabelFor(m => m.Radiator420mmSupport) 
+					@Html.EditorFor(m => m.Radiator420mmSupport, new { htmlAttributes = new { @class="", @type="number", @step="1", min="0"}}) 	
+				</div>
+
+					<button type="submit" class="submitbtn">Submit</button>
+			</div>
+		}
+	</div>
+</div>

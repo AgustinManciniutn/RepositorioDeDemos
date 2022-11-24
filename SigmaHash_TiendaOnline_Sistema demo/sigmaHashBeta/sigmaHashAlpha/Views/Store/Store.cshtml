@@ -1,0 +1,149 @@
+﻿@model ListAndFilter
+
+@using System.Reflection
+@using sigmaHashAlpha.Models.Products
+
+@{
+	var test = (bool)(ViewBag.Filtered??false);
+	var filter = (string)(ViewBag.FilterText);
+}
+<input id="filtered" value="@test.ToString()" hidden/>
+<input id="filtertext" value="@filter" hidden/>
+
+<div class="StoreContainer">
+	<div id="resultapnd" style="display:none;"></div>
+	<div class="StoreBanner ">
+
+	</div>
+	<div class="StoreDiv">
+		<div class="StoreFilter">
+
+		</div>
+		<div class="StoreList">
+
+			<div class="StoreSearchBox">
+
+				<div class="searchbar">
+					@using(Html.BeginForm("Search","Products", FormMethod.Post))
+					{
+					
+						<input asp-for="Filter.Page" value="1" hidden/>
+						if(test == true)
+						{
+							<input type="text" asp-for="Filter.Filter" id="searchbox" class="searchbox" value="@ViewBag.Filter" placeholder="@ViewBag.Filter" />
+						}
+						else
+						{
+							<input type="text" asp-for="Filter.Filter"  id="searchbox" class="searchbox" placeholder="Busca un item" />
+						}
+						<button class="searchbtn" type="submit"><div class="searchmagn centerer"><i class="bi bi-search"></i></div></button>
+					}
+
+				</div>
+
+				<div class="StoreProductList">
+					@foreach(var obj in Model.List)
+					{
+						<div class="Product">
+
+							<div class="ProductImg">
+								<img src="~/images/ProductImages/@obj.MainImage" /> 
+								
+							</div>
+
+							<div class="ProductDetails">
+								<div class="ProductTop">
+									<div class="ProductName">@obj.Category @obj.Brand @obj.Model </div>
+								</div>
+
+								<div class=ProductBottom>
+									<div>
+										<div class="ProductPrice">$ &nbsp @obj.Price</div>
+										
+											<div > <button type="submit" name="id" value="@obj.Id" class="addtocartbtn">Sumar al carrito</button> </div>
+										
+									</div>
+
+									<div>
+										@{
+											string urll = @obj.Id.Substring(0, 3).ToUpper(); 
+										}
+										<input type="hidden" data-url="@Url.Action("ProductData", @urll )" class="hidUrl">
+										<input   value="@obj.Id" class="hiddenid"/> 						
+									</div>
+								</div>
+								@*	<div class="dltprod">
+									<button value="@obj.Id" name="@obj.Category" class="dltprodbtn"><i class="bi bi-trash"></i> &nbsp; Delete</button>
+								</div>*@
+							</div>
+
+						</div>
+					}
+				</div>
+				<div>
+
+				</div>
+
+
+			</div>
+
+		</div>
+
+
+	</div>
+	
+
+</div>
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+
+		$('.addtocartbtn').click(function() {
+            let temp = this;
+				setTimeout(function(){
+
+					$(temp).css("filter", "contrast(0.4)");
+
+                },0);
+                
+
+                setTimeout(function(){
+
+                    $(temp).css("filter", "contrast(1)");
+
+                },150);
+            });
+
+		
+		$('.addtocartbtn').each(function() {
+			
+            
+
+            let id = $(this).val();
+
+
+            $(this).click(function(event) {
+
+       
+                $.ajax({
+
+                    type: 'POST',
+					url: '@(Url.Action("Add","Cart"))',
+                    data: { id },
+
+                    error: function() {
+                        alert("Error ocurrend. Please try again");
+                    }
+                }).done(function(result) {
+                    $('#smallcartcont').load(' #smallcartcont > *');
+                    $('#notif').load(' #notif > *');
+                });
+            });
+		});
+		
+			
+    </script>
+
+}

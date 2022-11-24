@@ -1,0 +1,287 @@
+﻿
+@{
+    Layout = "_Layout2";
+ }
+
+@using System.Reflection
+@using sigmaHashAlpha.Models.Products
+
+@model ListAndFilter
+
+@{
+	var test = (bool)(ViewBag.Filtered??false);
+	var filter = (string)(ViewBag.FilterText);
+}
+
+<input id="filtered" value="@test.ToString()" hidden/>
+<input id="filtertext" value="@filter" hidden/>
+	
+<div class="GeneralContainer">
+	<div class="ProductListHeader">
+	    <div class="webtitle">Product List</div>
+		
+		<div class = 'toggle-switch'>
+            <label class="switchlabel">
+                <input type = 'checkbox'>
+                <span class = 'DLslider'></span>
+            </label>
+
+        </div>
+
+	</div>
+
+	<div class="ListAndFilter">
+
+		<div class="filtercontainer">
+			<div class="filter ">
+
+				<div class="filtercategories centerer"  id="opencloser"> <div>Categories</div> <div><i id="filterarrow" class="bi bi-chevron-down"></i></div> </div>
+				<div class="catlist centerer">
+					@using(Html.BeginForm("SideBarSearch","Products", FormMethod.Post)){
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Motherboards  <span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button class="subcat" value="Intel">- Chipset Intel</button></div>
+							<div class="subcat"><button class="subcat" value="AMD">- Chipset AMD</button></div>
+						</div>
+					
+					
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Graphic Cards<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="Radeon" class="subcat">- Placas Radeon</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="GeForce" class="subcat">- Placas Geforce</button></div>
+						</div>
+					
+					
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Procesadores<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="AMD" class="subcat">- Procesadores AMD</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="Intel" class="subcat">- Procesadores Intel</button></div>
+						</div>
+					
+			
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Memorias RAM<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="DDR3" class="subcat">- DDR3</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="DDR4" class="subcat">- DDR4</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="DDR5" class="subcat">- DDR5</button></div>
+						</div>
+					
+					
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Alamacenamiento<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="HDD" class="subcat">- Disco rigido</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="SSD" class="subcat">- Disco solido</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="M.2" class="subcat">- NVME</button></div>
+						</div>
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Teclados y mouses<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="Keyboard" class="subcat">- Teclados</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="Mouse" class="subcat">- Mouses</button></div>
+@*							<div class="subcat"><button type="submit" name="filter" value="DDR4" class="subcat">- Mouse pads</button></div>*@
+						</div>
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Gabinetes, fuentes, coolers<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="Case" class="subcat">- Gabinetes</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="PSU" class="subcat">- Fuentes</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="Cooler" class="subcat">- Cooler fans/Water cooling</button></div>
+						</div>
+					
+						<div class="catlistchild">
+							<div class="cattitle" style="position:relative">Accesorios<span><i class="bi bi-chevron-down"></i></span> </div>
+							<div class="subcat"><button type="submit" name="filter" value="Mousepad" class="subcat">- Mouse Pads</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="Audio" class="subcat">- Headsets/Audio</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="Joystick" class="subcat">- Gamepads/Controllers/Joysticks</button></div>
+							<div class="subcat"><button type="submit" name="filter" value="Chair" class="subcat">- Sillas</button></div>
+						</div>
+
+						<div style="height: 50px;">
+
+						</div>
+					}
+				</div>	
+			</div>
+		</div>			
+		
+		<div class="ProductList">
+			<div class="searchbarcontainer centerer">
+				<div class="searchbar">
+
+					
+					
+					@using(Html.BeginForm("Search","Products", FormMethod.Post))
+					{
+					
+						<input asp-for="Filter.Page" value="1" hidden/>
+						if(test == true)
+						{
+							<input type="text" asp-for="Filter.Filter" id="searchbox" class="searchbox" value="@ViewBag.Filter" placeholder="@ViewBag.Filter" />
+						}
+						else
+						{
+							<input type="text" asp-for="Filter.Filter"  id="searchbox" class="searchbox" placeholder="Search for an item" />
+						}
+						<button class="searchbtn" type="submit"><div class="searchmagn centerer"><i class="bi bi-search"></i></div></button>
+					}
+
+				</div>
+
+			</div>
+
+
+			@foreach(var obj in Model.List)
+			{
+				<div class="Product">
+
+					<div class="ProductImg">
+						<img src="~/images/ProductImages/@obj.MainImage" /> 
+						
+					</div>
+
+					<div class="ProductDetails">
+						<div class="ProductTop">
+							<div class="ProductName">@obj.Category @obj.Brand @obj.Model </div>
+						</div>
+
+						<div class=ProductBottom>
+							<div>
+								<div class="ProductPrice">@obj.Price.ToString("C2")</div>
+							</div>
+
+							<div>
+								@{
+									string urll = @obj.Id.Substring(0, 3).ToUpper(); 
+								}
+								<input type="hidden" data-url="@Url.Action("ProductData", @urll )" class="hidUrl">
+								<input   value="@obj.Id" class="hiddenid"/> 						
+							</div>
+						</div>
+						@*	<div class="dltprod">
+							<button value="@obj.Id" name="@obj.Category" class="dltprodbtn"><i class="bi bi-trash"></i> &nbsp; Delete</button>
+						</div>*@
+					</div>
+
+				</div>
+			}
+			<div class="pagenumbcont">
+				@{
+					int pages = (int)ViewBag.PageCount;
+
+
+					for (int i = 1; i <= pages; i++)
+					{
+														@using (Html.BeginForm("Pages", "Products", FormMethod.Post))
+						{
+															<input asp-for="Filter.Page" value="@i" hidden/>
+															<input asp-for="Filter.Filter" value="@filter" hidden />
+															<button type="submit" class="pagenumb"> @i </button>
+						}
+					}
+
+
+
+				}
+
+
+			</div>
+		</div>
+
+		<div class="ProductData">	
+			<div id="datadiv">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts
+{
+
+	<script src="~/js/ProductList.js" asp-append-version="true"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$('.dltprodbtn').each(function () {
+				let id = $(this).val();
+
+				this.addEventListener('click', function (e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();								
+					$.ajax({
+						type: 'POST',
+						url: "@(Url.Action("DeleteProduct","MOT"))",
+						data: { id },
+					}).done(function (result) {
+					});
+				});
+			});
+
+			$('.Product').each(function () {
+				 let id = $(this).find('.hiddenid').val();
+				 let url = $(this).find('.hidUrl'). data('url');
+
+				 this.addEventListener('click', function (e) {
+				     e.preventDefault();
+				     e.stopImmediatePropagation();
+
+
+				     $.ajax({
+				         type: 'POST',
+				         url: url,
+				         data: { id },
+				     }).done(function (result) {
+				         $('.ProductData').first().empty();
+				         $('.ProductData').append(result);
+				     });
+				 });
+			});
+			
+
+            
+   
+
+            if ($('#filtered').val() === 'true') {
+                $('.searchbox').value += $('#filtertext').val();
+			}
+
+			 searchbox = document.getElementById('searchbox');
+			var search;
+			searchbox.onkeyup = function () {
+			    search = searchbox.value;
+        
+			}
+
+            $('.pagenumb').each(function() 
+			{	
+                this.addEventListener('click', function() {
+                    let temp = this.val();
+                    if ($('#filtered').val() === 'true') {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        let obj = {
+                            Filter: search,
+                            Page: temp
+                        };
+                        $.ajax({
+                            type: "POST",
+							url: "@(Url.Action("Search","Products"))",
+                            data: { obj },
+							contentType: "application/json; charset=utf-8",
+                            success: function() {
+                                alert('succ');
+                            },
+                            error: function() {
+                                alert('err');
+                            }
+                        }).done(function() {
+                            alert('done');
+                        });
+                    }
+
+                });
+
+            });
+
+		});	
+	</script>
+}

@@ -1,0 +1,12 @@
+﻿<?xml version="1.0"?>
+<DTS:ConnectionManager xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:ObjectName="(localdb)_Local.HashDB"
+  DTS:DTSID="{9D0F658F-30AE-4DD2-BA1E-01745DA4792D}"
+  DTS:CreationName="OLEDB">
+  <DTS:ObjectData>
+    <DTS:ConnectionManager
+      DTS:ConnectRetryCount="1"
+      DTS:ConnectRetryInterval="5"
+      DTS:ConnectionString="Data Source=(localdb)\Local;Initial Catalog=HashDB;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-HashDBMigration-{9D0F658F-30AE-4DD2-BA1E-01745DA4792D}(localdb)\Local.HashDB;Auto Translate=False;" />
+  </DTS:ObjectData>
+</DTS:ConnectionManager>

@@ -1,0 +1,129 @@
+﻿@using System.Reflection
+
+@using System.ComponentModel
+@using sigmaHashAlpha.Models.Products
+@{
+	Layout = null;
+}
+@model Storage
+
+<div class="webtitle editortitle">
+	Storage Editor
+</div>
+
+<div class="formcontainer">
+	<div>
+		@using (Html.BeginForm("AddProduct", "STO", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formholder" }))
+		{
+			<div class="productform">			
+				<div class="formimages">
+					<div class="previewer">
+						<div class="prodslider">		    
+							<div id="gal1" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal2" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal3" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal4" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal5" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+							<div id="gal6" class="gallery"> </div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+						</div>
+					</div>
+					<div class="gallerycontainer">
+
+						<div class="onepic">
+							<input type="file" asp-for="Images" id="addpic1" multiple="false" accept="image/png, image/jpeg"  hidden>
+							<label for="addpic1"><i class="bi bi-file-earmark-plus"></i></label>
+
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic2" accept="image/png, image/jpeg" hidden>
+							<label for="addpic2"><i class="bi bi-file-earmark-plus"></i></label>
+
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic3" accept="image/png, image/jpeg" hidden>
+							<label for="addpic3"><i class="bi bi-file-earmark-plus"></i></label>
+
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic4" accept="image/png, image/jpeg" hidden>
+							<label for="addpic4"><i class="bi bi-file-earmark-plus"></i></label>
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic5" accept="image/png, image/jpeg" hidden>
+							<label for="addpic6"><i class="bi bi-file-earmark-plus"></i></label>
+						</div>
+						<div  class="onepic">
+
+							<input type="file" asp-for="Images"  id="addpic6" accept="image/png, image/jpeg" hidden>
+							<label for="addpic6"><i class="bi bi-file-earmark-plus"></i></label>
+						</div>
+					</div>
+				</div>
+
+				<div class="productinputs">
+					<div class=" attrP">
+						<div class="attrsubt">Brand:</div>
+						@Html.EditorFor(m => m.Brand, "test", new { htmlAttributes = new { @class=""}}) 	
+					</div>
+					<div class=" attrP">
+						<div class="attrsubt">Model:</div> 
+						@Html.EditorFor(m => m.Model, "test", new { htmlAttributes = new { @class=""}}) 	
+					</div>
+					<div class=" attrP">
+						<div class="attrsubt">Price:</div> 
+						@Html.EditorFor(m => m.Price, "test", new { htmlAttributes = new { @class="priceinput", placeholder="00.00"  }}) $	
+
+					</div>
+
+
+					<div class="proddetails">
+						<div><span class="detail"><i class="bi bi-shield-shaded"></i> &nbsp Garantía - &nbsp</span> <span>@Html.EditorFor(m => m.Warranty, "test", new { htmlAttributes = new { @class="", @min="0" }})   </span> </div>
+						<div><span class="detail"><i class="bi bi-truck"></i> &nbsp Ships nationally &nbsp</span> <span>@Html.CheckBoxFor(m => m.ShipsNational, new { htmlAttributes = new { @class="" }})   </span> </div>
+						<div><span class="detail"><span class="material-symbols-outlined">south_america</span> &nbsp Ships internationally &nbsp</span> 
+							<span>@Html.CheckBoxFor(m => m.ShipsInternational, new { htmlAttributes = new { @class="" }})   </span> </div>
+					</div>
+
+					<div id="editinfo">  <i class="bi bi-info"></i>- First in order image will be used as Thumbnail for store listing of products. </div>
+
+					<div class="boxpreview">
+
+
+					</div>
+					<input asp-for="Category"  value="Storage" hidden />
+				</div>
+
+			</div>
+
+			<div class="specscontainer">
+				<div class="attrsubt">GENERAL</div>
+				<div class="attr">
+					@Html.LabelFor(m => m.StorageType) 
+					@Html.DropDownListFor(m => m.StorageType, (SelectList)ViewBag.StorageTypes, "Select a Type" , new{@class =""})	
+				</div>
+				<div class="attr attrB">
+					@Html.LabelFor(m => m.StorageSize) 
+					@Html.EditorFor(m => m.StorageSize, new { htmlAttributes = new { @class="", @placeholder="Valor numérico en GB",type="number", @min="0", @value="0"}}) 
+				</div>
+				<div class="attr attrNum">
+					@Html.LabelFor(m => m.ConnectionType) 
+					@Html.EditorFor(m => m.ConnectionType,  new { htmlAttributes = new { @class="", @type="text", @placeholder="I.e: Sata/m.2/PCI Express" }}) 
+				</div>
+				<div class="attr  attrB">
+					@Html.LabelFor(m => m.Consumption) 
+					@Html.EditorFor(m => m.Consumption,  new {htmlAttributes = new { @class="", @placeholder="Valor numérico en W", @min="0", type="number" }})	
+				</div>
+				<div class="attr">
+					@Html.LabelFor(m => m.RPM) 
+					@Html.EditorFor(m => m.RPM,  new {htmlAttributes = new { @class="", @placeholder="Valor númerico de rpm", @min="0", type="number" }})	
+				</div>
+
+				
+					<button type="submit" class="submitbtn">Submit</button>
+			</div>
+		}
+	</div>
+</div>

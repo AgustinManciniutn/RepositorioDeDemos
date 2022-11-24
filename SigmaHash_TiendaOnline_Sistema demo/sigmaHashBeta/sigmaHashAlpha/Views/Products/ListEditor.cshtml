@@ -1,0 +1,116 @@
+﻿
+@{
+    Layout = "_Layout2";
+ }
+
+
+@using System.Reflection
+@using sigmaHashAlpha.Models.Products
+
+@model Motherboard
+
+<div class="homecontainer" style="background: #f4f4f4;">
+
+	<div class="pageheader"> 
+
+		<div >
+			List Editor
+		</div>
+
+	</div>
+
+	<div class="listicons">
+		<div class="icon" id="mb"><img src="~/images/ListEditorIcons/mb.png" /></div>
+		<div class="icon" id="cpu"><img src="~/images/ListEditorIcons/cpu.png" /></div>
+		<div class="icon" id="gpu"><img src="~/images/ListEditorIcons/gpu2.png" /></div>
+		<div class="icon" id="ram"> <img src="~/images/ListEditorIcons/ram2.png" /></div>
+		<div class="icon" id="sto"> <img src="~/images/ListEditorIcons/ssd.png" /></div>
+		<div class="icon" id="key"> <img src="~/images/ListEditorIcons/keyboard.png" /></div>
+		<div class="icon" id="mou"> <img src="~/images/ListEditorIcons/mouse.png" /></div>
+		<div class="icon" id="psu"><img src="~/images/ListEditorIcons/psu.png" /></div>
+		<div class="icon" id="mon"><img src="~/images/ListEditorIcons/monitor.png" /></div>
+		<div class="icon" id="cas"><img src="~/images/ListEditorIcons/case.png" /></div>
+		<div class="icon" id="cha"><img src="~/images/ListEditorIcons/chair.png" /></div>
+	</div>
+
+
+
+	<div id="editor">
+		<div id="editordiv">
+
+		</div>
+
+	</div>
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<div class="attributes">
+
+		<a href="https://www.flaticon.com/free-icons/cpu-tower" title="cpu tower icons">Cpu tower icons created by Good Ware - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/motherboard" title="motherboard icons">Motherboard icons created by AB Design - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/ram" title="ram icons">Ram icons created by Andy838125 - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/gpu" title="gpu icons">Gpu icons created by Linector - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/device" title="device icons">Device icons created by Andy838125 - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/ssd" title="ssd icons">Ssd icons created by Freepik - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/electric-keyboard" title="electric keyboard icons">Electric keyboard icons created by iconfield - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/gamer" title="gamer icons">Gamer icons created by Freepik - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/psu" title="psu icons">Psu icons created by Vectoricons - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/curved-monitor" title="curved monitor icons">Curved monitor icons created by xnimrodx - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/pc" title="pc icons">Pc icons created by Erifqi Zetiawan - Flaticon</a>
+		<a href="https://www.flaticon.com/free-icons/gaming-chair" title="gaming chair icons">Gaming chair icons created by Freepik - Flaticon</a>
+	</div>
+
+
+@section Scripts{
+    <script src="~/js/ListEditor.js" asp-append-version="true"></script>
+	<script type="text/javascript">
+
+		
+		$('.icon').each(function() {
+
+
+		    this.addEventListener('click',function() {
+					e.preventDefault();
+							e.stopImmediatePropagation();	
+                let id = $(this).attr('id');
+
+                $.ajax({
+
+                    type: 'POST',
+                    url: "@(Url.Action("Editor","Products "))",
+                    data: { id },
+                    success: function() {
+                        alert('succ');
+					},
+                    error: function() {
+                        alert('error');
+					}
+
+                }).done(function(result) {
+                    alert('done');
+					$('.ProductData').first().empty();
+                    $('.ProductData ').append(result);
+
+                });
+		
+		    });
+		
+		});
+
+
+	</script>
+
+}

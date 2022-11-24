@@ -1,0 +1,141 @@
+﻿@using sigmaHashAlpha.Models.ViewModels
+
+@{
+	Layout = "_Layout";
+	ViewData["Title"] = "Cart Overview";
+}
+@model CartViewModel
+
+
+
+<div class="cartcontainer">
+
+	<h1>Tu Carrito de compras</h1>
+
+	
+
+	@if(Model.CartItems.Count == 0)
+	{
+		<h3 class="display-4 text-center">Your cart is empty</h3>
+	}
+	else{
+		<table class="table">
+			<tr>
+				<th>Product</th>
+				<th>Quantity</th>
+				<th></th>
+				<th>Price</th>
+				<th>Total</th>
+		
+			</tr>
+			@{List<CartItem> newlist = new();}
+			@for(int i = 0; i <Model.CartItems.Count(); i++)
+			{
+				var item = Model.CartItems[i];
+
+				<tr>
+					<td >
+
+						<div class="CartItem">
+							<div class="Itempad">
+
+							</div>
+							<div class="CartItemImg">
+								<img src="~/images/ProductImages/@item.Image"/>
+							</div>
+							<div class="CartItemName">
+								@item.ProductName
+							</div>
+							
+						</div>
+						
+					</td>
+					<td > 
+						<div class="tdcenterer">
+							@item.Quantity
+						</div>
+						
+					</td>
+					<td >
+						<div class="cartquantbtns">
+							@using(Html.BeginForm("Increase","Cart",FormMethod.Post)){
+								<button type="submit" class="btn btn-primary btn-sm" name="id" value="@item.ProductId">+</button>
+							}
+							@using(Html.BeginForm("Decrease","Cart",FormMethod.Post)){
+								<button type="submit" class="btn btn-primary btn-sm" name="id" value="@item.ProductId">-</button>
+							}
+							@using(Html.BeginForm("RemoveItem","Cart",FormMethod.Post)){
+								<button class="btn btn-primary btn-sm" name="id" value="@item.ProductId" >Remove</button>
+							}
+						</div>
+					</td>
+		
+					<td>
+						<div class="tdcenterer">
+							@item.Price.ToString("C2")
+						</div>
+					</td>
+					<td>
+						<div class="tdcenterer">
+							@Model.CartItems.Where(x => x.ProductId == item.ProductId).Sum(x=> x.Quantity * x.Price).ToString("C2")
+						</div>
+					</td>
+				</tr>
+				
+			}
+			@{Model.CartItems = newlist;}
+			<tr>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td class="tdcenterer" >
+					<div class="tdcenterer grandtotal" >
+						Checkout Total: 
+					</div>
+				</td>
+				<td >
+					<div class="tdcenterer grandtotal" >
+						@Model.GrandTotal.ToString("C2")
+					</div>
+				</td>
+			</tr>
+		
+			<tr>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					
+				</td>
+				<td>
+					<div class="tdcenterer checkoutbtns">
+						<a class="btn btn-danger" asp-action="Clear">Clear cart</a>
+					</div>				
+				</td>
+				<td class="text-right" colspan="4">
+					<div class="tdcenterer checkoutbtns">
+
+						@if(User.Identity.IsAuthenticated)
+						{
+							<a asp-action="SubmitReservation" asp-controller="Cart" class="btn btn-primary"> Checkout </a>
+						}
+						else
+						{
+							<a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Checkout</a>
+						}
+						
+					</div>
+				</td>
+			</tr>
+		</table>
+	}
+</div>

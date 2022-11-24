@@ -1,0 +1,463 @@
+﻿
+/*MANAGER*/
+
+.ManagerDiv{
+
+    height: 100%;
+    display:flex;
+
+    display:flex;
+    flex-grow: 1;
+    padding-inline: 5%
+}
+
+.ManagerDiv div{
+
+
+}
+
+.ManagerSideBar {
+    width: 280px;
+    height: 100%;
+    display: flex;
+
+}
+
+.ManagerMenu {
+    width: 100%;
+    height: 100%;
+    padding-block: 3%;
+    background: #ffffff;
+
+    justify-items: center;
+}
+
+    .ManagerMenu ul {
+
+        width: 100%;
+        padding-inline: 0;
+    }
+
+    .ManagerMenu li {
+        min-height: 60px;
+
+        padding-inline: 8%;
+        text-decoration: none;
+        list-style: none;
+        align-content: center;
+        width: 100%;
+        font-size: 1.1rem;
+        align-content: center;
+        align-items: center;
+        display: flex;
+    }
+
+        .ManagerMenu li i {
+            margin-inline: 10px;
+            margin-right: 25px;
+            font-size: 1.6rem;
+        }
+
+        .ManagerMenu li:hover {
+            color: #362ef6;
+        }
+
+/*END OF MANAGER*/
+.AdminContainer{
+    width: 100%;
+    height: 100%;
+}
+.adminbox{
+    height: 100%;
+    align-content: center;
+
+    
+    justify-content: center;
+    align-items:center;
+    background: white;
+    width: 100%;
+    display:flex;
+
+}
+.adminleft{
+    width: 40%;
+
+}
+.admininput {
+    display: flex;
+    width: 480px;
+    height: 500px;
+    background: white;
+    border-radius: 18px;
+    padding-block: 3%;
+
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    position: relative;
+}
+
+#emailinput{
+    display:flex;
+    border-radius: 5px;
+    border: 2px solid #c1c1c1;
+    min-height: 45px;
+    min-width: 100%;
+}
+#emailinput:focus{
+    border: 0;
+    outline: 3px solid #878787;
+}
+
+.admininput p input{
+    margin-right: 30px;
+    margin-block: 10px;
+
+    transform: scale(1.8);
+}
+.admininput button{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 1.4rem;
+}
+
+.greencell {
+    background: #9ce488;
+    font-size: 1.5rem;
+    max-width: 99px;
+    min-width: 99px;
+    align-content:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height: 58px;
+    margin-top:1px;
+    z-index:1;
+    align-self:center;
+}
+
+.admininput {
+ 
+
+}
+
+.adminbox table{
+    width: fit-content;
+}
+.tablerole{
+
+    max-width: 100px;
+    min-width: 100px;
+    background: red;
+}
+.adminbox tr {
+    display: flex;
+    height: 60px;
+}
+.tablemail{
+    width: 400px;
+}
+.adminbox td {
+
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+
+
+
+
+
+/*STOCK*/
+
+.StockList{
+    
+}
+
+.StockList .searchbarcontainer{
+    width: 65%;
+}
+.StockContainer {
+    background: #e1e1e1;
+    overflow-y: scroll;
+}
+
+    .StockContainer .webtitle {
+        color: #313131;
+        font-size: 7vh;
+        position: absolute;
+    }
+
+.stocktable {
+    width: 100%;
+    transform: translateX(-200px);
+    width: 70vw;
+    transition: transform 0.3s;
+}
+
+    .stocktable th {
+        font-size: 1.3rem;
+        color: #2c2c2c;
+    }
+
+    .stocktable td {
+        height: 50px;
+    }
+
+.StockContainer table {
+}
+
+.tdcolor1 {
+    background: #bdbdbd;
+}
+
+.stocktable input {
+    width: 80px;
+    border: 0;
+    border-radius: 4px;
+}
+
+.stockbtns {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+    .stockbtns button {
+        width: 40px;
+        border: none;
+        margin-inline: 15px;
+    }
+
+.resetbtn {
+    width: 90px;
+    width: 80px !important;
+}
+
+#notif {
+}
+/*END OF STOCK*/
+
+
+/*RESERVATIONS*/
+
+
+:root {
+    --BorderColor: #c1c1c1;
+}
+
+
+.ReservationsDiv {
+    display: flex;
+    width: 100%;
+
+    height: 120px;
+}
+.OneReservation {
+    width: 1100px;
+    height: 110px;
+    background: white;
+    position: relative;
+    
+    display: flex;
+    flex-direction:column;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid var(--BorderColor);
+    font-family: 'Montserrat', sans-serif;
+
+}
+.ReservId {
+    color: black;
+    position: absolute;
+    top: 5px;
+    left: 30px;
+    font-size: 1.3rem;
+    font-family: 'Cairo', sans-serif;
+}
+.ReservationData{
+    display:flex;
+    width: 100%;
+    height: 100%;
+    font-size: 1.0rem;
+    align-self: center;
+    padding: 0px;
+    align-items: center;
+}
+.ReservUser {
+    border-right: 1px solid var(--BorderColor);
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    align-items: center;
+    padding-inline: 2%;
+    box-shadow: inset 0px 0px 10px 0 rgba(0,0,0, 0.2);
+}
+.ReservationDate {
+    height: 100%;
+    border-right: solid 1px var(--BorderColor);
+    font-size: 1.2rem;
+}
+.ReservationDate div{
+    height: 50%;
+    display:flex;
+    align-items: center;
+    padding-inline: 20px;
+
+}
+    .ReservationDate div:nth-child(1) {
+        border-bottom: solid 1px var(--BorderColor);
+        
+    }
+.valid{
+    background: #3abf2f;
+    height: 100%;
+    width: 100%;
+    color: white;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+.notvalid {
+    background: #717171;
+}
+.ReservTotal{
+    padding-block: 20px;
+    width: 200px;
+    justify-content: center;
+    display:flex;
+    border-right: 1px solid var(--BorderColor);
+    height: 100%;
+    align-items:center;
+    flex-direction: column;
+    
+}
+.ReservTotal div{
+    display:flex;
+    align-items: center; 
+
+}
+.downloadpdf{
+    width: 200px;
+}
+.ReservationsList{
+    width: 100%;
+
+
+    display:flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.ReservPDF{
+    height: 100%;
+    flex-grow: 1;
+
+    justify-content:center;
+    display:flex;
+    align-items:center;
+
+}
+.FileReservation{
+    width: 50px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    font-size: 1rem;
+}
+.FileReservation input {
+    width: 25px;
+    height: 25px;
+  
+}
+
+.ReservationsMenu {
+    padding-block: 30px;
+    padding-inline: 30px;
+    width: 300px;
+    font-family: 'Montserrat', sans-serif;
+    height: 100%;
+    background: white;
+    justify-content:space-between;
+    display:flex;
+    flex-direction:column;
+}
+.ReservationsMenu button{
+    height: 60px;
+    margin-block: 10px;
+    width: 100%;
+}
+.OneReservationItems {
+    
+    width: 1100px;
+    overflow:hidden;
+    transition: 0.3s;
+    max-height:0px;
+ 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    
+}
+.ItemsExpander {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background:white;
+    border: 1px solid var(--BorderColor);
+    font-size: 1.5rem;
+    border-radius: 4px;
+    
+}
+.ItemsContainer{
+    
+}
+.heightzero {
+    max-height: 400px;
+}
+.oneitem {
+    background:white;
+    width: 97%;
+    height: 50px;
+    align-items: center;
+    display: flex;
+    border-bottom: 1px solid var(--BorderColor);
+    justify-content: space-evenly;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+}
+.oneitem div{
+    height: 100%;
+    width: 100%;
+    border-right: 1px solid var(--BorderColor);
+   
+    align-items:center;
+    display:flex;
+    justify-content:center;
+}
+.oneitem div:nth-child(1)
+{
+    width: 500px;
+}
+.oneitem div:nth-child(3){
+    width: 25%;
+
+}
+oneitemheader{
+    font-weight:800;
+}
+.oneitem div:nth-child(4)
+{
+    width: 550px;
+}
+.oneitem div:nth-child(5) {
+    width: 550px;
+}
+.oneitemheader{
+    font-weight: 800;
+}
+/*END OF RESERVATIONS*/
