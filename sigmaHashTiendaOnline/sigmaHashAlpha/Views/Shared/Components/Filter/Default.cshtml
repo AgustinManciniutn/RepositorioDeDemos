@@ -1,0 +1,196 @@
+﻿@using sigmaHashAlpha.Models.ViewModels.CriteriaViewModel
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    Layout= null;
+}
+
+    @model CriteriaViewModel
+
+    <div class="Filter  smallscrollbar scroller">
+
+        <div class="col-12">
+        
+            <div class="col-12 py-5 px-3 py-4 filterheader">
+                <div class="d-flex col 12 px-3 py-2 rounded searchbarcontainer">
+                     <div class="col-2">
+                     </div>   
+                     <i class="bi bi-search mx-1"></i> &nbsp; <input type="text"
+                     placeholder="Search" class="searchbar"/>
+                </div>
+        
+            </div>
+            <div class="col-12">
+                <div class="col-12 px-4 py-2 d-flex "><h5 class="col-7">Categorías</h5>
+                    <div class=" h-25 col-5 removefilter">
+
+                        @Html.ActionLink("Remove Filters", "RemoveFilter", "Session", new { actionname = @Model.Criteria.CurrentPage},
+                        new { @class ="btn btn-outline-secondary", @style="font-size: 0.8rem;"})
+                    </div>
+                </div>
+        
+                @foreach(var item in Model.Categories)
+                {
+                <div class="cat col-12 Category">
+                    <div class="col-12 d-flex">
+
+
+                             @Html.ActionLink(@item.Value,
+                                 "SetCategory", "Session",
+                                 new { 
+                                        category = @item.Value,
+                                       catid = @item.Key,
+                                       actionname = @Model.Criteria.CurrentPage,
+                                       controllername = "Products"
+                                     },
+                                 new { @class ="catbtn col-10 h-100"})
+
+                             <div class="col-2 d-flex  justify-content-center align-items-center">
+                                 @if(@Model.Criteria.Category != item.Value)
+                                 {
+                                     <i class="bi bi-plus-lg"></i>
+                                 }
+                                 else
+                                 {
+                                     <i class="bi bi-check-lg text-success fs-4"></i>
+                                 }
+                             </div>
+                         </div>
+                         <div class="catcollapse">
+                     
+                         </div>
+                    </div>
+                 
+                 
+                }
+            </div>
+
+            @if(Model.Criteria.Category != null)
+            {   
+                <div class="col-12">
+                <div class="col-12 px-4 py-2"><h5>Filtros</h5></div>
+            
+                    @foreach(var item in Model.Attributes)
+                    {
+                        <div class="cat col-12 Category">
+                            <div class="col-12 d-flex">
+                                <button class="SubCategory catheader col-10 h-100 " value="@item.Key">
+                                   @item.Value 
+                                </button>
+                                <div class="col-2  d-flex  justify-content-center align-items-center">
+                                    <i class="bi bi-plus-lg"></i>
+                                </div>
+                            </div>
+                            <div class="catcollapse">
+                                @{var list = Model.Subcategories;}
+
+                                @foreach(var opt in list.Where(x=> x.Id == item.Key))
+                                {
+                                    <div class="col-12 d-flex">
+                                          <div class="col-2"></div>
+
+                                          @Html.ActionLink(@opt.Value + " (" + @opt.Count + ")",
+                                          "SetSubCategory", "Session",
+                                          new { 
+                                                id = @opt.Id,
+                                                value = @opt.Value,
+                                                actionname = @Model.Criteria.CurrentPage,
+                                                controllername = "Products"
+                                              },
+                                         new { @class ="subcat col-8"})
+
+                                         <div class="col-2 d-flex align-items-center justify-content-center">
+
+                                            @if(@Model.Criteria.SelectedAttributes.Any(x=> x.Id == opt.Id && x.Value == opt.Value))
+                                            {
+                                                <i class="bi bi-check-lg text-success fs-4"></i>
+                                            }
+                                         </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+            
+            
+                    }
+                </div>
+            }   
+            else
+            {
+                <div class="col-12 d-flex justify-items-center align-items-center justify-content-center p-4 my-4">
+                    <div class="CategoryWarning">
+                       <span><i class="bi bi-exclamation-circle"></i> &nbsp; Selecciona una categoria para filtrar sus atributos </span> 
+                    </div>
+                </div>
+            }
+        
+        </div>
+        
+    </div>
+
+    <script type="text/javascript">
+        //magnifier effect
+        var magnifier = $('.searchbar').parent().find('i');
+        $('.searchbar').focusin(function() {
+
+            $(this).parent().css('outline', '2px solid #597bff');
+
+        
+            magnifier.css('position', 'absolute');
+           magnifier.css('left', '90%');
+            magnifier.css('transform', 'rotateY(0deg)');
+            
+        });
+        $('.searchbar').focusout(function() {
+
+            $(this).css('background', 'inherit');
+            $(this).parent().css('outline', 'none');
+
+
+            magnifier.css('position', 'absolute');
+            magnifier.css('left', '15px');
+             magnifier.css('transform', 'rotateY(180deg)');
+        });
+
+        //filter by category
+        //$('.catbtn').each(function() {
+        //    let category = $(this).val();
+        //    $(this).click(() => {
+        //        $.ajax({
+
+        //            url: "@Url.Action("SetCategory","Session")",
+        //            data: {category},
+        //            type: 'POST',
+        //            success: (function() {
+        //                window.location.reload();
+        //            }),
+        //            error: function(){
+        //                alert('fail');
+        //            }
+        //        });
+
+        //    });
+        
+        //});
+        var action = "Store";
+        var controller = "Products"
+        //search bar
+        $('.searchbar').keypress(function(e){
+            if (e.which == 13) {
+                
+                var search = $(this).val();
+
+                $.ajax({
+                    type: "POST",
+                    data: { search},
+                    url: "@Url.Action("SetSearch","Session")"
+                }).done(function(result) {
+                    window.location.reload();
+
+;                });
+            }
+        });
+
+
+    </script>

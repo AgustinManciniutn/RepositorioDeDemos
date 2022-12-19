@@ -1,0 +1,233 @@
+﻿@using sigmaHashAlpha.Infrastructure.Reservations
+
+@{
+    Layout = "_Layout3";
+}
+@model List<ReservationAndItems>
+
+
+<div class="col-12 h-100 UserReservations bg-dark">
+
+	<div class="col-12 d-flex header bg-light webtitle justify-content-center  align-items-center">
+		<div class="col-10 ">
+			Mis reservas
+		</div>
+	</div>
+
+    <div class="ReservationsList scroller my-4 h-75 px-5" id="ReservationsList">
+
+
+
+			@foreach(ReservationAndItems obj in @Model)
+			{
+				<div style="display:flex;">
+					<div class="FileReservation">
+						<input class="selectedItem" type="checkbox" value="@obj.Reservation.ReservationId" unchecked/>
+						
+					</div>
+					
+					<div class="OneReservation">
+						<div class="ReservId">ID: &nbsp; <span style="font-weight: 800;">@obj.Reservation.ReservationId</span></div>
+
+						<div class="ReservationData">
+							<div class="ReservUser">
+								<i class="bi bi-file-person"></i> &nbsp; @obj.Reservation.UserEmail
+							</div>
+
+							<div class="ReservationDate">
+
+								<div>@DateTime.Parse(@obj.Reservation.Created).ToString("g")</div>
+								
+								@if(obj.Reservation.IsExpired == false)
+								{
+									<div class="valid">
+										<i class="bi bi-calendar-check"></i>
+									</div>
+								}
+								else
+								{
+									<div class="valid notvalid">
+										<i class="bi bi-calendar2-x"></i> &nbsp; <span style="font-size: 1rem;">Expired </span>
+									</div>
+								}
+								
+							</div>
+							<div class="ReservTotal">
+								<div style="height: 25%; font-size: 1.0rem;"><b>Total: </b></div>
+								<div style="height: 75%;">
+									$@obj.Items.Sum(x => x.Total)
+								</div>
+
+							</div>
+
+							<div class="ReservPDF">
+								@if(obj.Reservation.BankTransferReceipt == null)
+								{
+									<div>
+										<button disabled class="btn btn-secondary downloadpdf" style="color: white;" >
+												<i class="bi bi-file-earmark-pdf"></i>
+												<p>No files found</p>
+										</button>
+									</div>
+								}
+								else
+								{
+									<div>
+										
+										<a class="btn btn-primary downloadpdf" asp-controller="Manager" asp-action="DownloadPDF" >
+											<i class="bi bi-file-earmark-pdf"></i>
+											<p>Download</p>
+										</a>
+										
+									</div>
+								}
+							</div>
+
+						</div>
+						
+
+					</div>
+
+
+				</div>
+				<div class="ItemsContainer" style="display:flex;">
+					<div class="FileReservation">
+						
+					</div>
+					<div style="height:fit-content;">
+						<div class="OneReservationItems">
+							<div class="oneitem oneitemheader">
+									<div>
+										ID
+									</div>
+									<div>
+										Name
+									</div>
+									<div>
+										Amount
+									</div>
+									<div>
+										Price
+									</div>
+									<div>Total</div>
+
+								</div>
+							@foreach(var item in obj.Items)
+							{
+								<div class="oneitem">
+									<div>
+										@item.ProductId
+									</div>
+									<div>
+										@item.ProductName
+									</div>
+									<div>
+										@item.Amount
+									</div>
+									<div>
+										$@item.Price
+									</div>
+									<div>$@item.Total</div>
+
+								</div>
+							}
+						</div>	
+						<div class="ItemsExpander">
+								<i class="bi bi-chevron-double-down"></i>
+						</div>
+					</div>
+				</div>
+			}
+	
+		</div>
+
+
+</div>
+
+
+@section Scripts{
+
+	<script type="text/javascript">
+
+		$('#makesale').click(function() {
+            
+            let list = [];
+			$('.selectedItem').each(function(){		
+
+			    if ($(this).is(":checked")) {
+			        list.push($(this).val());
+				}
+			});
+			
+            if (list.length > 0) 
+			{
+                $.ajax({
+                    type: 'POST',
+                    data: { list },
+                    url: "@Url.Action("MakeSale","Manager")",
+
+                }).done(function() {
+                    $('#ReservationsList').load(" #ReservationsList > *");
+                    alert("done");
+                });
+            }
+			else{
+                alert('Select any Reservation first.');
+			}
+
+		});
+
+
+
+		$('#DeleteSelected').click(function() {
+			
+            confirm("Are you sure you want to continue?");
+            if (confirm) 
+			{
+                let list = [];
+				$('.selectedItem').each(function() {
+					if($(this).is(":checked")) {
+                        list.push($(this).val()); 
+					}
+				});
+				
+				if(list.length > 0)
+				{
+					$.ajax({
+						type: "POST",
+						data: { list },
+						url: "@Url.Action("DeleteSelected","Manager")"
+					}).done(function() {
+                        $('#ReservationsList').load(" #ReservationsList > *");
+					});
+				}
+				else{
+                    alert('No items selected');
+				}
+			}
+		});
+
+		$('.ItemsExpander').each(function() {
+	
+			let check = true;
+            this.addEventListener('click', (function() {
+  
+                if (check === true) {
+                    $(this).parent().find('.OneReservationItems').addClass('heightzero');
+                    check = false;
+				}
+				else{
+                    $(this).parent().find('.OneReservationItems').removeClass('heightzero');
+                    check = true;
+				}
+
+            }));
+
+		});
+
+
+
+
+	</script>
+
+}

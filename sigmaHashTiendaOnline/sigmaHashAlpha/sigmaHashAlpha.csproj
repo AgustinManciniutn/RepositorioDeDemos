@@ -1,0 +1,43 @@
+﻿
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UserSecretsId>aspnet-sigmaHashAlpha-6840BE22-DD15-4F22-96FD-D903B33E4A54</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Content Include="Repositories\GenericRepository.cs" />
+    <Content Include="Repositories\ProductImageRepository.cs" />
+    <Content Include="Repositories\ProductRepository.cs" />
+    <Content Include="Repositories\StorageRepository.cs" />
+    <Content Include="Repositories\UnitOfWork.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mailjet.Api" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.7" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.10" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.10">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.10" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\IUtilities\Infrastructure\Stock\" />
+    <Folder Include="test\" />
+    <Folder Include="Views\Shared\Editors\" />
+    <Folder Include="wwwroot\images\dropdownimages\" />
+    <Folder Include="wwwroot\images\ProductImages\" />
+  </ItemGroup>
+
+</Project>

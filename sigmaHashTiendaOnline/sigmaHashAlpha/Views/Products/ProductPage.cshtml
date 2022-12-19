@@ -1,0 +1,295 @@
+﻿@using sigmaHashAlpha.Models.Architecture
+
+@{
+    Layout = "_Layout";
+}
+
+@model Product
+
+
+<div class="pp ProductPage col-12 d-flex bg-light flex-column flex-grow-1 h-100 align-content-center align-items-center d-flex flex-column scroller">
+
+    <div class="ppHeader bg-dark d-flex px-5">
+		<div class="col-2 text-light h-100 d-flex align-items-center align-items-center">
+			<a asp-controller="Products" asp-action="Store">
+				<i class="bi bi-arrow-90deg-left"></i> &nbsp; <b> Back to Store </b> </a>
+		</div>
+		<div class="storepaths col-4 text-light h-100 d-flex align-items-center align-items-center px-5">
+			<a asp-controller="Products" asp-action="Store">
+				<i class="bi bi-shop"></i>&nbsp<b>Store</b>  </a>
+
+			<i class="bi bi-arrow-right-short"></i>
+			<a asp-action="SetSearchAndRedirect" asp-controller="Session" asp-route-search="@Model.Category" asp-route-actionname="Store">
+				 <b>@Model.Category</b> </a>
+			<i class="bi bi-arrow-right-short"></i>
+			<a asp-action="SetSearchAndRedirect" asp-controller="Session" asp-route-search="@Model.Brand" asp-route-actionname="Store">
+				 <b>@Model.Brand</b> </a>
+			<i class="bi bi-arrow-right-short"></i>
+			 <span style="font-weight: 300;">@Model.Model </span> 
+
+		</div>
+    </div>
+    <div class="ppMain col-8 d-flex" >
+
+        <div class="images col-2 flex-grow-1 d-flex flex-column h-100">
+            <div class="formimages d-flex flex-row-reverse">	
+					<div class="previewer">
+						<div class="prodslider">
+
+							@if (Model != null)
+							{
+								@if (Model.ImagesPaths != null && Model.ImagesPaths.Count() > 0)
+								{
+
+									var list =  Model.ImagesPaths;
+									@for (int i = 0; i < Model.ImagesPaths.Count(); i++)
+									{
+										var id = "gal" + (i + 1).ToString();
+										<div id=@id class="gallery"> 
+											<img src="~/images/ProductImages/@Model.ImagesPaths[i]" />
+										</div>
+									}
+								}
+							}
+
+						</div>
+					</div>
+@*					@if(@Model.ImagesPaths != null)
+					{
+						<div class="imgcounter">@Model.ImagesPaths.Count() fotos </div>
+					}*@
+					<div class="productslidercontainer">
+						<div class="productslider">
+							<div class="innerslider">
+
+								@if (Model != null)
+								{
+
+									@for (int i = 0; i < Model.ImagesPaths.Count(); i++)
+									{
+										var pic = "addpic" + (i + 1).ToString();
+
+										<div class="slide-img">
+											<img src="~/images/ProductImages/@Model.ImagesPaths[i]" />
+										</div>
+									}
+									@for (int j = Model.ImagesPaths.Count(); j < 6; j++)
+									{
+
+									}
+								}
+							</div>
+						</div>
+					</div>
+			</div>
+        </div>
+        <div class="ppDetails  col-7 h-100  p-5 ">
+
+			<div class="details">
+				<br/>
+				<div class="ppName col-12 text-dark ">
+				    @Model.Category @Model.Brand @Model.Model
+				</div>
+
+				<div class="ppPath">
+					<a asp-action="SetSearchAndRedirect" asp-controller="Session" asp-route-search="@Model.Category" asp-route-actionname="Store"> 
+
+						@Model.Category
+					</a>
+					>
+					
+					<a asp-action="SetSearchAndRedirect" asp-controller="Session" asp-route-search="@Model.Brand" asp-route-actionname="Store"> 
+						@Model.Brand 
+					</a>
+				</div>
+				<div class="ppPrice">
+					<span>$</span> <span>@Model.Price</span>
+				</div>
+				<div class="col-12" style="">
+						<div class="proddetails">
+							<div><span class="detail"><i class="bi bi-shield-shaded"></i> &nbsp Garantía :  @Model.Warranty meses</span>  </div>
+							<div><span class="detail"><i class="bi bi-truck"></i> &nbsp Ships nationally &nbsp</span> </div>
+							<div><span class="detail" style="margin-left: -3px;"><span class="material-symbols-outlined">south_america</span> Ships internationally &nbsp</span> </div>
+						</div>
+				</div>
+				<div class="InStock">
+					@if (Model.Stock > 0)
+					{
+						<div> <span><i class="bi bi-box"></i> <b>En stock</b>  </span> </div>
+
+					}
+				</div>
+				<div class="ppButtons">
+					<button type="submit" name="id" value="@Model.ProductId" class="btn btn-primary storecartbtn addtocartbtn">Sumar al carrito</button>
+					 <button class="btn btn-primary storecartbtn pcbuilderButton">Usar en PC BUILDER <i class="bi bi-wrench-adjustable"></i></button>
+				</div>
+			</div>
+
+			<div class="attributeList smallscrollbar">
+				
+				<div class="col-12 racefont" >
+					Especificaciones
+				</div>
+				@{
+					string varclass = "ItemSecondary";
+					var u = 1;
+					var classname =  string.Empty;
+				}
+				@foreach(var item in Model.ProductAttributes)
+				{
+					if(u % 2 == 0)
+					{
+						classname = varclass;
+					}
+					else
+					{
+						classname = string.Empty;
+					}
+					<div class="items col-12 d-flex justify-content-between @classname">
+						<div class="productItem">@item.AttributeName : </div>
+						<div  class="productItem">@item.Value</div>
+					</div>
+
+					u++;
+				}
+
+			</div>
+
+			<button id="heightBtn" class="heightBtn btn btn-secondary">
+				Especificaciones  <i class="bi bi-hand-index-thumb"></i> 
+			</button>
+        </div>
+
+    </div>
+
+	<div class="col-12 d-flex flex-column  bg-dark my-4" style="height: fit-content; padding-block: 30px;">
+		@await Component.InvokeAsync("Recommended", new { Id = Model.ProductId})
+	</div>
+</div>
+
+
+@section Scripts{
+	  <script src="~/js/Cart.js" asp-append-version="true"></script>
+
+	<script type="text/javascript">
+		var l = 0;
+		$('.heightBtn').click(function() {
+			
+            if (l % 2 == 0) {
+
+                $('.details').addClass('heightToZero')
+
+                $('.details').css('height', '0');
+            }
+            else {
+				  $('.details').css('height', '110%');
+			}
+            l++;
+		
+		});
+		
+		$('.addtocartbtn').each(function () {
+		
+			let id = $(this).val();
+			$(this).click(function (event) {
+		
+                $.ajax({
+
+                    type: 'POST',
+                    url: '@(Url.Action("Add","Cart"))',
+                    data: { id },
+
+                    error: function() {
+                        alert("Error ocurrend. Please try again");
+                    }
+                }).done(function() {
+                    $('#smallcartcont').load(' #smallcartcont > *');
+                    toastr.success('Se ha agregado el item al carrito', 'Carrito de compras');
+                });
+			});
+		});
+
+
+		//let slider = document.querySelector('.productslider');
+		//let innerSlider = document.querySelector('.innerslider');
+	
+		//let pressed = false;
+		//let startx;
+		//let x;
+	
+		//slider.addEventListener('mousedown', () => {
+	 //      $('.slide-img').removeClass('peAuto');
+	 //       $('.slide-img').addClass('peInherit');
+	 //   });
+	
+		//slider.addEventListener('mousedown', (e) => {
+		//    pressed = true;
+		//    startx = e.offsetX - innerSlider.offsetLeft;
+		//    slider.style.cursor = 'grabbing';
+	 //       console.log(innerSlider.offsetLeft);
+		//});
+	
+		//slider.addEventListener('mouseenter', () => {
+	 //       $('.slide-img').removeClass('peInherit');
+	 //       $('.slide-img').addClass('peAuto');
+		//    slider.style.cursor = 'grab';
+		//});
+	
+
+		//slider.addEventListener('mouseup', () => {
+		//    slider.style.cursor = 'grab';
+	 //       $('.slide-img').removeClass('peInherit');
+	 //       $('.slide-img').addClass('peAuto');
+		//})
+	
+		//window.addEventListener('mouseup', () => {
+		//    pressed = false;
+		//});
+	
+		//slider.addEventListener('mousemove', (e) => {
+	
+		//    if (pressed) {
+		//		$('.slide-img').addClass('peInherit');
+		//		$('.slide-img').removeClass('peAuto');
+		//		e.preventDefault();
+
+		//		x = e.offsetX;	
+		//		innerSlider.style.left = `${x - startx}px`;
+		//		checkboundary();
+		//	}
+		//});
+
+		//function checkboundary() {
+		//    let outer = slider.getBoundingClientRect();
+		//    let inner = innerSlider.getBoundingClientRect();
+	
+		//    if (parseInt(innerSlider.style.left) > 0) {
+		//        innerSlider.style.left = '0px';
+		//    }
+		//    else if (inner.right < outer.right) {
+		//        innerSlider.style.left = `-${inner.width - outer.width}px`;
+		//    }
+		//}
+		var p = 0;
+
+
+
+		$('.slide-img').each(function () {
+
+			let k = -450 * p;
+			let s = k + 'px';
+			let temp = this;
+			this.addEventListener('mouseover', function () {
+					$('.prodslider').css('margin-left', s);
+			});
+			p++;
+		});
+
+		$('.pcbuilderButton').click(function() {
+	
+		
+	
+		});
+
+	</script>
+}

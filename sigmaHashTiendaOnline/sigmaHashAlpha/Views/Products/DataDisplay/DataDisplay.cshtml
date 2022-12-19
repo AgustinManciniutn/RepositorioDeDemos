@@ -1,0 +1,49 @@
+﻿@{
+	Layout = null;
+}
+
+
+@using System.Reflection
+@using System.ComponentModel
+@using System.ComponentModel.DataAnnotations
+@using sigmaHashAlpha.Models.ViewModels.DatDisplay
+
+@model DataDisplayViewModel
+
+<div class="DataForm ">
+		<div class="DataImg">
+			<img src="~/images/ProductImages/@Model.ImagePath"/>	
+		</div>
+
+		<div class="DataProdData">
+			@foreach(var item in Model.Details)
+			{ 
+				<div class="d-flex justify-content-between">
+					<div>@item.Key</div>
+
+					@if(item.Value == null )
+					{
+						<div>-</div>
+					}
+					else{
+						<div>@item.Value</div>
+					}
+				</div>
+			}
+		</div>
+		<br/>
+
+		@foreach(var item in Model.Data)
+		{ 
+			<div class="d-flex justify-content-between">
+				<div>@item.Key</div>
+				@if(item.Value == null )
+				{
+					<div>-</div>
+				}
+				else{
+					<div>@item.Value</div>
+				}
+			</div>
+		}
+</div>

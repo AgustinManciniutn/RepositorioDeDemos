@@ -1,0 +1,14 @@
+﻿@using sigmaHashAlpha.Models.Architecture
+
+@{
+	Layout = null;
+}
+@model ProductAttribute
+
+
+
+	@Html.HiddenFor(m => m.AttributeId)
+	@Html.DisplayFor(m => m.AttributeName)
+	@Html.EditorFor(m => m.Value, "test", new { htmlAttributes = new { @class="", @placeholder="I.E: AMD Ryzen 7", @min="0"}}) 	
+
+

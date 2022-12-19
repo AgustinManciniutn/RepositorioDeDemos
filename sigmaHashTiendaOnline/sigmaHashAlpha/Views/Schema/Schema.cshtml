@@ -1,0 +1,193 @@
+﻿@using sigmaHashAlpha.Models.Architecture.Schema
+@{
+    Layout = "_Layout2";
+}
+
+@model SchemaMap
+
+
+
+<div class="GeneralContainer StockContainer" style="display:flex; overflow-y:hidden">
+    <vc:Sidebar />
+<div class="SchemaContainer d-flex flex-column flex-grow-1 vh-100 bg-light">
+
+   
+
+    <div class="SchemaHeader d-flex col-12 bg-dark justify-content-center ">
+        <div class="d-flex text-light col-8">
+            <h1 class="align-self-center">Schema Editor</h1>
+        </div>
+    </div>
+    <div class="d-flex col-12 h-75 align-content-center justify-content-center">
+
+@*        <div class="col-2 d-flex flex-column align-content-center justify-content-center px-2">
+            <div class="p-5 bg-dark text-light">Product</div>
+        </div>*@
+                    <input type="hidden" asp-for="CategorySelectedId" id="selectedcat"/>
+            <input type="hidden" asp-for="AttributeSelectedId" id="selectedatt"/>
+
+        <div class="SchemaSection d-flex flex-column position-relative align-self-center justify-self-center px-2">
+
+            <h2 class="align-self-center p-3">Categories</h2>
+
+            @using (Html.BeginForm("AddCategory","Schema", FormMethod.Post))
+            {
+                <div class="col-12 d-flex border border-dark rounded align-items-center p-2">
+                    <div class="col-4">New Category: </div>
+                    <input name="categoryname" type="text" class="d-flex flex-grow-1 form-control" />
+                </div>
+            }
+            <div class="scroller col-12 d-flex flex-column my-2">
+               
+                @foreach(var cat in Model.Categories)
+                {   
+
+                        <div class="entries col-12 d-flex">
+                             <div class="d-flex  col-4  align-items-center px-3">
+                                <input type="hidden" value="Category" class="hiddenName"/>
+                                <button class="dltbtn btn btn-danger h-75" value="@cat.CategoryId"><i class="bi bi-trash"></i></button>
+                                <button class="btn btn-primary h-75" value="@cat.CategoryId"><i class="bi bi-pencil"></i></button>
+                             </div>
+                             <a asp-controller="Schema" asp-action="GetAttributes" asp-route-id="@cat.CategoryId"  class="schema-element Category col-8 d-flex text-dark justify-items-center justify-content-start">
+                                 @cat.Name
+                             </a>
+
+                        </div>
+                    
+
+                }
+            </div>
+
+
+        </div>
+         <div class="SchemaSection schemabuttons d-flex flex-column position-relative px-2 ">
+             <h2 class="align-self-center p-3">Attributes</h2>
+
+              @using (Html.BeginForm("AddAttribute","Schema", FormMethod.Post))
+              {
+                  <div class="col-12 d-flex border border-dark rounded align-items-center p-2">
+                      <div class="col-4">New attribute: </div>
+                      <input type="hidden" asp-for="Attribute.CategoryId" value="@Model.CategorySelectedId"/>
+                      <input  type="text" asp-for="Attribute.AttrName" class="d-flex flex-grow-1 form-control" />
+                  </div>
+              }
+              <div class="scroller col-12 d-flex flex-column my-2" >
+                   @foreach(var attr in Model.Attributes)
+                   {
+                        <div class="entries SubCategories col-12 d-flex">
+                             <div class="d-flex  col-4 align-items-center px-3">
+                                <input type="hidden" value="Attribute" class="hiddenName"/>
+                                <button class="dltbtn btn btn-danger h-75" value="@attr.AttributeId"><i class="bi bi-trash"></i></button>
+                                <button class="btn btn-primary h-75" value="@attr.AttributeId"><i class="bi bi-pencil"></i></button>
+                             </div>
+                            <a asp-controller="Schema" asp-action="GetOptions" asp-route-id="@attr.AttributeId" class="schema-element Category col-8 d-flex text-dark justify-items-center justify-content-start">
+                                @attr.AttrName 
+                            </a>
+                        </div>
+
+                   }
+              </div>
+
+         </div>
+
+        <div class="SchemaSection col-4 d-flex flex-column position-relative px-2">
+            <h2 class="align-self-center p-3">Attribute options</h2>
+
+                    @{int? val = Model.AttributeSelectedId;}
+      
+            <div class="col-12 d-flex border border-dark rounded align-items-center p-2">
+                <div class="col-4">New option: </div>
+                <input id="foreignkey" type="hidden" />
+                <input id="option" class="d-flex flex-grow-1 form-control" />
+            </div>
+
+            <div class="Attribute scroller col-12 d-flex flex-column  my-2">
+                 @if(Model.Options != null)
+                 @foreach(var option in Model.Options)
+                 {
+                      <div class="entries SubCategories col-12 d-flex">
+                           <div class="d-flex  col-4  align-items-center px-3">
+                               <input type="hidden" value="AttributeOption" class="hiddenName"/>
+                              <button class="dltbtn btn btn-danger h-75" value="@option.AttributeOptionId" ><i class="bi bi-trash"></i></button>
+                              <button class="btn btn-primary h-75" value="@option.AttributeOptionId"><i class="bi bi-pencil"></i></button>
+                           </div>
+                          <a class="schema-element Category col-8 d-flex text-dark justify-items-center justify-content-start">
+                              @option.Option 
+                          </a>
+
+                      </div>
+                 }
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+</div>
+
+@section Scripts{
+
+
+    <script type="text/javascript">
+
+      
+        //add attribute
+        $('#option').keypress(function(e){
+
+            var attid = parseInt($('#selectedatt').val());
+            var option = $('#option').val();
+            let id = att;
+            if (e.which == 13) {
+                $.ajax({
+                    type: "POST",
+                    data: { id : attid, option : option},
+                    url: "@Url.Action("AddAttributeOption","Schema")",
+                }).done(function() {
+                    window.location.replace('/Schema/GetOptions/' + attid.toString());
+
+                });
+            }
+        });
+
+        $('.dltbtn').each(function(){
+            
+            let Name = $(this).parent().find('.hiddenName').val();
+            let id = $(this).val();
+
+            $(this).click(function() {
+
+                $.ajax({
+
+                    type: 'POST',
+                    data: { Name, id },
+                    url: "@Url.Action("DeleteSchemaElement","Schema")"
+
+                }).done(function() {
+                    window.location.replace('/Schema/Schema');
+                });
+
+            });
+
+        });
+            var cat = $('#selectedcat').val();
+            var att = $('#selectedatt').val();
+
+
+        $('.entries').each(function() {          
+            
+            let id = $(this).find('.dltbtn').val();
+            let Name = $(this).find('.hiddenName').val();
+
+            if(id === cat && Name === 'Category')
+            {
+                $(this).addClass('btn-selected');
+            }
+            if(id === att && Name === 'Attribute')
+            {
+                $(this).addClass('btn-selected');
+            }
+        });
+    </script>
+}
+

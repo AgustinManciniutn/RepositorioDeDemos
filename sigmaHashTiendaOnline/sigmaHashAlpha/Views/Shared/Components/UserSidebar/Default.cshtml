@@ -1,0 +1,109 @@
+﻿@using sigmaHashAlpha.Models.Architecture
+
+<div class="ManagerSideBar ">
+		<div class="expandbtnparent">
+			<button class="sidebarexpandbtn">
+				<i class="bi bi-list-ul"></i>
+			</button>
+		</div>
+		<div class="ManagerMenu " >
+
+			<ul class="h-100" style="margin-top: 80px;">
+@*				@if(User.IsInRole("Manager") || User.IsInRole("Administrator") || User.IsInRole("Assistant"))
+				{*@
+					<li><a asp-controller="" asp-action=""><i class="bi bi-person-fill"></i>Usuario</a></li>
+				@*}*@
+@*				@if(User.IsInRole("Manager") || User.IsInRole("Administrator") || User.IsInRole("Assistant"))
+				{*@
+					<li><a asp-controller="User" asp-action="UserReservations"><i class="bi bi-bag"></i>Mis reservas</a></li>
+				@*}*@
+
+			</ul>
+
+		</div>
+
+
+	</div>
+
+<script type="text/javascript">
+	var j = 0;
+	var k = 2;
+	$('#CatCollapse').click(function() {
+        setTimeout(function() {
+			$('#CatCollapse').css('pointer-events', 'none');
+
+        }, 100);
+
+        $(this).css('width', '530px');
+        if (j % 2 == 0) {
+
+			 if (k % 2 === 0) {
+			     $('.ManagerSideBar').css('width', '280px');
+						 $('.sidebarexpandbtn').css('width', '30px');
+			     setTimeout(function() {
+			         $('.ManagerSideBar').css('overflow', 'visible')
+			     }, 300);
+                 k++;
+			 } //If sidebar is minimized, on add product press, expands sidebar first
+
+            $('.CategoryList').css('max-width', '250px');
+            $(this).css('background', '#1771ff');
+			$(this).css('color', 'white');
+            setTimeout(function() {
+                $('.CategoryList').css('max-height', '900px');
+            }, 400);
+
+        }
+        else 
+		{
+			
+				$('.CategoryList').css('max-height', '0');
+		
+			setTimeout(function() {
+				$('#CatCollapse').css('width', '280px');
+            }, 600);
+            setTimeout(function() {
+                $('#CatCollapse').css('background-color', 'inherit');
+                $('#CatCollapse').css('color', 'black');
+                $('#CatCollapse').css('color', 'black');
+
+            }, 700);
+			
+		}
+        setTimeout(function() {
+            j++;
+            $('#CatCollapse').css('pointer-events', 'auto');
+        }, 600);
+	});
+
+
+$('.expandbtnparent').click(function() {
+
+    if (k % 2 === 0) {
+        $('.ManagerSideBar').css('width', '280px');
+			 $('.sidebarexpandbtn').css('width', '30px');
+        setTimeout(function() {
+            $('.ManagerSideBar').css('overflow', 'visible')
+		
+        }, 300);
+    }
+    else {
+
+		$('.CategoryList').css('max-height', '0');
+		
+
+			$('#CatCollapse').css('color', 'black');
+			$('#CatCollapse').css('width', '280px');
+			$('#CatCollapse').css('background', 'inherit');
+     
+
+        $('.ManagerSideBar').css('width', '80px');
+        $('.ManagerSideBar').css('overflow', 'hidden');
+        $('.sidebarexpandbtn').css('width', '9px');
+		 $('.sidebarexpandbtn').css('right', '31px');
+	}
+    k++;
+});
+
+
+</script>

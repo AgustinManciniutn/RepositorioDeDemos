@@ -1,0 +1,90 @@
+﻿
+@{
+    Layout = "_Layout2";
+ }
+@using System.Reflection
+@using sigmaHashAlpha.Models.Architecture
+
+@model Product
+
+
+<div class="homecontainer" style="background: #f4f4f4;">s
+
+	<div class="pageheader"> 
+
+		<div >
+			List Editor
+		</div>
+
+	</div>
+
+
+	@Html.Partial("_listicons")
+
+
+
+	<div id="editor">
+		<div id="editordiv">
+
+			@Html.Partial("_EditorPartial", Model)
+
+		</div>
+
+	</div>
+</div>
+
+<div class="attributes">
+
+	<a href="https://www.flaticon.com/free-icons/cpu-tower" title="cpu tower icons">Cpu tower icons created by Good Ware - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/motherboard" title="motherboard icons">Motherboard icons created by AB Design - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/ram" title="ram icons">Ram icons created by Andy838125 - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/gpu" title="gpu icons">Gpu icons created by Linector - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/device" title="device icons">Device icons created by Andy838125 - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/ssd" title="ssd icons">Ssd icons created by Freepik - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/electric-keyboard" title="electric keyboard icons">Electric keyboard icons created by iconfield - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/gamer" title="gamer icons">Gamer icons created by Freepik - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/psu" title="psu icons">Psu icons created by Vectoricons - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/curved-monitor" title="curved monitor icons">Curved monitor icons created by xnimrodx - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/pc" title="pc icons">Pc icons created by Erifqi Zetiawan - Flaticon</a>
+	<a href="https://www.flaticon.com/free-icons/gaming-chair" title="gaming chair icons">Gaming chair icons created by Freepik - Flaticon</a>
+</div>
+
+
+@section Scripts{
+    <script src="~/js/ListEditor.js" asp-append-version="true"></script>
+	<script type="text/javascript">
+
+		var i = 1;
+		    $('.imgdlt').each(function() {
+		        var id = $('#hiddenid').val();
+				
+                let c = i;
+				let k = '#addpic' + c.toString();
+				let p = '#gal' + c;
+  
+			
+		        let j = i;
+		        $(this).click(function() {
+                    alert(id);
+		            let Id = id + j;
+		            $.ajax({
+		                type: "POST",
+		                data: { Id },
+		                url: '@Url.Action("DeleteImage", "Generic")',
+                        error: function() {
+                            alert('err');
+						}
+		            });
+
+					document.querySelector(k).value = "";
+					$(p).html("");
+                    $(k).parent().find('label').css('pointer-events', '');
+					$(k).parent().find('label').css('border-color', '');
+                    alert('asdf');
+		        });
+		        i++;
+		    });
+
+	</script>
+
+}

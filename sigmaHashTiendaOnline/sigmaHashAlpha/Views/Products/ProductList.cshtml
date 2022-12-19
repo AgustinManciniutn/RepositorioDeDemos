@@ -1,0 +1,177 @@
+﻿@using sigmaHashAlpha.Models.Architecture
+
+@{
+    Layout = "_Layout2";
+ }
+
+@model List<Product>
+
+<div class="col-12 d-flex ListOfProducts">
+			<vc:Sidebar />
+
+
+
+			<vc:Filter />
+
+		<div class="ProductList">
+		
+@*			<div class="ProductListHeader">
+			    <div class="webtitle">Product List</div>
+				
+				<div class = 'toggle-switch'>
+			        <label class="switchlabel">
+			            <input type = 'checkbox'>
+			            <span class = 'DLslider'></span>
+			        </label>
+	
+			    </div>
+	
+			</div>*@
+	
+			@foreach(var obj in Model)
+			{
+				<div class="Product">
+	
+					<div class="ProductImg">
+						<img src="~/images/ProductImages/@obj.MainImage" /> 
+						
+					</div>
+	
+					<div class="ProductDetails">
+						<div class="ProductTop">
+							<div class="ProductName">@obj.Category @obj.Brand @obj.Model </div>
+						</div>
+	
+						<div class="ProductBottom d-flex flex-grow-1 ">
+							<div class="d-flex flex-grow-1 col-12 flex-grow-1 position-relative" >
+								<div class="ProductPrice">@obj.Price.ToString("C2")</div>
+	
+								<div class="d-flex flex-grow-1 h-50 align-self-center justify-item-between">
+	
+									<a  class="btn col-10 btn-outline-info mx-1" asp-controller="Generic" asp-action="EditProduct" 
+									asp-route-id="@obj.ProductId"
+									>Edit</a>
+	
+									<a class="btn btn-outline-danger mx-1 col-10" asp-controller="Generic" asp-action="DeleteProduct"
+									asp-route-id="@obj.ProductId"
+									>Delete</a>
+	
+								</div>
+							</div>
+	
+							<div>
+	
+								<input type="hidden" data-url="@Url.Action("ProductData", "Generic" )" class="hidUrl">
+								<input   value="@obj.ProductId" class="hiddenid"/> 						
+							</div>
+						</div>
+					</div>
+	
+				</div>
+			}
+			<div class="pagenumbcont">
+	
+	
+	
+			</div>
+		</div>
+	
+		<div class="ProductData">	
+			<div id="datadiv">
+	
+			</div>
+		</div>
+
+</div>
+
+@section Scripts
+{
+
+	<script src="~/js/ProductList.js" asp-append-version="true"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			$('.dltprodbtn').each(function () {
+				let id = $(this).val();
+
+				this.addEventListener('click', function (e) {
+					e.preventDefault();
+					e.stopImmediatePropagation();								
+					$.ajax({
+						type: 'POST',
+						url: "@(Url.Action("DeleteProduct","MOT"))",
+						data: { id },
+					}).done(function (result) {
+					});
+				});
+			});
+
+			$('.Product').each(function () {
+				 let id = $(this).find('.hiddenid').val();
+				 let url = $(this).find('.hidUrl'). data('url');
+
+				 this.addEventListener('click', function (e) {
+				     //e.preventDefault();
+				     //e.stopImmediatePropagation();
+
+
+				     $.ajax({
+				         type: 'POST',
+				         url: url,
+				         data: { id },
+				     }).done(function (result) {
+				         $('.ProductData').first().empty();
+				         $('.ProductData').append(result);
+				     });
+				 });
+			});
+			
+
+            
+   
+
+            if ($('#filtered').val() === 'true') {
+                $('.searchbox').value += $('#filtertext').val();
+			}
+
+			 searchbox = document.getElementById('searchbox');
+			var search;
+			searchbox.onkeyup = function () {
+			    search = searchbox.value;
+        
+			}
+
+            $('.pagenumb').each(function() 
+			{	
+                this.addEventListener('click', function() {
+                    let temp = this.val();
+                    if ($('#filtered').val() === 'true') {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        let obj = {
+                            Filter: search,
+                            Page: temp
+                        };
+                        $.ajax({
+                            type: "POST",
+							url: "@(Url.Action("Search","Products"))",
+                            data: { obj },
+							contentType: "application/json; charset=utf-8",
+                            success: function() {
+                                alert('succ');
+                            },
+                            error: function() {
+                                alert('err');
+                            }
+                        }).done(function() {
+                            alert('done');
+                        });
+                    }
+
+                });
+
+            });
+
+		});	
+	</script>
+}

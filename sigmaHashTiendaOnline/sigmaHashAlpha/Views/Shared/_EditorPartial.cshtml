@@ -1,0 +1,191 @@
+﻿@using sigmaHashAlpha.Models.Architecture
+
+@{
+	Layout = null;
+}
+
+@model Product
+
+<div class="webtitle editortitle">
+	@Model.Category &nbsp; Editor
+</div>
+
+<div class="formcontainer">
+	<div>
+		@using (Html.BeginForm("MakeEdit", "Generic", FormMethod.Post, new { enctype = "multipart/form-data", @class = "formholder" }))
+		{
+			<input type="hidden" asp-for="ProductId" id="hiddenid"/>
+
+			<div class="productform">			
+				<div class="formimages">	
+					<div class="previewer">
+						<div class="prodslider">
+
+							@if (Model != null)
+							{
+								@for (int i = 0; i <= 5; i++)
+								{
+									var id = "gal" + (i + 1).ToString();
+									<div id=@id class="gallery"> 
+										@if (Model.ImagesPaths.Count() > 0)
+										{
+											if (Model.ImagesPaths.First().Substring(Model.ProductId.Length, 1) == (i + 1).ToString())
+											{
+												<img src="~/images/ProductImages/@Model.ImagesPaths.First()" />
+												Model.ImagesPaths = Model.ImagesPaths.Skip(1).ToList();
+											}
+
+											
+										}
+
+									</div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+								}
+							}
+							else
+							{
+								@for (int j = 0; j < 6; j++)
+								{
+									var id2 = "gal" + (j + 1).ToString();
+									<div id="@id2" class="gallery">
+
+									</div> <div class="imgdlt"><i class="bi bi-x-circle imgx"></i></div>
+								}
+							}
+						</div>
+					</div>
+					<div class="gallerycontainer">
+						@if (Model != null)
+						{
+							@for (int i = 0; i < Model.ImagesPaths.Count(); i++)
+							{
+								var pic = "addpic" + (i + 1).ToString();
+								<div class="onepic">
+									<input type="file" asp-for="Images" id=@pic multiple="false" accept="image/png, image/jpeg"  hidden>
+									<label  for=@pic><i class="bi bi-file-earmark-plus"></i></label>
+
+								</div>
+							}
+							@for (int j = Model.ImagesPaths.Count(); j < 6; j++)
+							{
+								var pic2 = "addpic" + (j + 1).ToString();
+								<div class="onepic">
+									<input type="file" asp-for="Images" id=@pic2 multiple="false" accept="image/png, image/jpeg" value="" hidden>
+									<label for=@pic2><i class="bi bi-file-earmark-plus"></i></label>
+
+								</div>
+							}
+						}
+						else
+						{
+							@for (int j = 0; j < 6; j++)
+							{
+								var count = j + 1;
+								var id = "addpic" + count.ToString();
+								<div class="onepic">
+									<input type="file" asp-for="Images" id=@id multiple="false" accept="image/png, image/jpeg" hidden>
+									<label for="@id"><i class="bi bi-file-earmark-plus"></i></label>
+
+								</div>
+							}
+						}
+					</div>
+				</div>
+
+				<div class="productinputs">
+					<div class=" attrP">
+						<div class="attrsubt">Brand:</div>
+						@Html.EditorFor(m => m.Brand, "test", new { htmlAttributes = new { @class=""}}) 	
+					</div>
+					<div class=" attrP">
+						<div class="attrsubt">Model:</div> 
+						@Html.EditorFor(m => m.Model, "test", new { htmlAttributes = new { @class=""}}) 	
+					</div>
+					<div class=" attrP">
+						<div class="attrsubt">Price:</div> 
+						@Html.EditorFor(m => m.Price, "test", new { htmlAttributes = new { @class="priceinput", placeholder="00.00"  }}) $	
+
+					</div>
+
+
+					<div class="proddetails">
+						<div><span class="detail"><i class="bi bi-shield-shaded"></i> &nbsp Garantía - &nbsp</span> <span>@Html.EditorFor(m => m.Warranty, "test", new { htmlAttributes = new { @class="", @min="0" }})   </span> </div>
+						<div><span class="detail"><i class="bi bi-truck"></i> &nbsp Ships nationally &nbsp</span> <span>@Html.CheckBoxFor(m => m.ShipsNational, new { htmlAttributes = new { @class="" }})   </span> </div>
+						<div><span class="detail"><span class="material-symbols-outlined">south_america</span> &nbsp Ships internationally &nbsp</span> 
+							<span>@Html.CheckBoxFor(m => m.ShipsInternational, new { htmlAttributes = new { @class="" }})   </span> </div>
+					</div>
+
+					<div id="editinfo">  <i class="bi bi-info"></i>- First in order image will be used as Thumbnail for store listing of products. </div>
+
+					<div class="boxpreview">
+
+
+					</div>
+					<input asp-for="Category" hidden />
+				</div>
+
+			</div>
+
+			<div class="specscontainer">
+				<div class="attrsubt">GENERAL</div>
+				@{
+					var u = 0;
+					var val = "attrB";
+			    }
+			
+				@if (Model.ProductAttributes != null)
+					@for(int i = 0; i < Model.ProductAttributes.Count()	; i++)
+					{
+						if(u % 2 == 0)
+						{
+							val = string.Empty;
+						}
+						{
+							<div class="attr @val">
+
+								<input type="hidden" asp-for="@Model.ProductAttributes[i].AttributeId"/>
+								@Html.DisplayFor(x => x.ProductAttributes[i].AttributeName)
+								@Html.HiddenFor(x => x.ProductAttributes[i].AttributeName)
+								@Html.HiddenFor(x=> x.ProductAttributes[i].Id)
+								@if(Model.ProductAttributes[i].Attribute.HasOptions == true)
+								{
+									@Html.DropDownListFor(x => x.ProductAttributes[i].Value, 
+									new SelectList(Model.ProductAttributes[i].Attribute.AttributeOptions.Select(x => x.Option).ToList()))
+								}
+								else
+								{
+								@Html.EditorFor(m => m.ProductAttributes[i].Value, "test", new { htmlAttributes = new { @class="", @placeholder="I.E: AMD Ryzen 7", @min="0"}}) 	
+					
+								}
+
+							
+							</div>
+						}
+						val = "attrB";
+						u++;
+					}
+				@*
+				<div class="attr">
+					@Html.LabelFor(m => m.Series) 
+					@Html.EditorFor(m => m.Series, "test", new { htmlAttributes = new { @class="", @placeholder="I.E: AMD Ryzen 7", @min="0"}}) 	
+				</div>
+				<div class="attr attrB">
+					@Html.LabelFor(m => m.Socket) 
+					@Html.EditorFor(m => m.Socket, "test", new { htmlAttributes = new { @class="", @min="0", @value="0"}}) 
+				</div>*@
+
+					<button type="submit" class="submitbtn">Submit</button>
+			</div>
+		}
+	</div>
+</div>
+		
+
+@section Scripts{
+    <script src="~/js/ListEditor.js" asp-append-version="true"></script>
+	<script type="text/javascript">
+			
+
+			
+	</script>
+
+}

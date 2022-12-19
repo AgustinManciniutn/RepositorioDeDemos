@@ -1,0 +1,648 @@
+﻿
+
+/*MANAGER*/
+
+/*sidebar*/
+
+
+
+.ManagerDiv {
+    height: 100%;
+    display: flex;
+    display: flex;
+    flex-grow: 1;
+    padding-inline: 5%;
+}
+
+.ManagerDiv div{
+
+}
+
+.ManagerSideBar {
+    background: #f0f7ff;
+    color: black ;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    width: 80px;
+    transition: width 0.3s;
+    position: relative;
+
+}
+
+.ManagerMenu {
+    min-width: 280px;
+    z-index: 100;
+    height: 100%;
+
+    justify-items: center;
+    overflow: visible;
+}
+.sidebarexpandbtn {
+    z-index: 101;
+    font-size: 1.9rem;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    align-self: center;
+    justify-self: center;
+    background: transparent;
+    text-align: center;
+    justify-items: center;
+    transition: width 0.3s;
+    position: absolute;
+    right: 31px;
+    overflow:hidden;
+    width: 8px;
+}
+.expandbtnparent {
+    color: white;
+    height: 80px;
+    background: #1771ff;
+    align-content: center;
+    display: flex;
+}
+.expandbtnparent i{
+    color: white;
+    
+}
+
+.ManagerMenu ul {
+    width: 100%;
+    padding-inline: 0;
+}
+
+    .ManagerMenu li {
+        min-height: 60px;
+        padding-inline: 24px;
+        text-decoration: none;
+        list-style: none;
+        align-content: center;
+        width: 100%;
+        font-size: 1.1rem;
+        align-content: center;
+        align-items: center;
+        display: flex;
+        transition: width 0.4s;
+        position:relative;
+    }
+    .ManagerMenu li a{
+        width: 100%;
+    }
+        .ManagerMenu li i {
+            margin-inline: 10px;
+            margin-right: 25px;
+            font-size: 1.3rem;
+        }
+
+        .ManagerMenu li:hover {
+            background: white;
+            background: #1771ff;
+            color:white;
+        }
+#CatCollapse :hover {
+    cursor: pointer;
+}
+.CategoryList {
+    position: absolute;
+    top: -16px;
+    right: 0;
+    width: 300px;
+    height: fit-content;
+    max-height: 0;
+    margin-top: 76px;
+    background: white;
+    max-width: 0;
+    overflow: hidden;
+    transition: all 0.5s;
+    transition-property: max-height;
+    color: black;
+}
+.menuextension {
+
+    background: #1771ff;
+    display: flex;
+    width: 100%;
+    min-height: 60px;
+    max-height: 61px;
+    margin-bottom: 25px;
+}
+.CategoryList div {
+    height: 35px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+    font-weight: 500;
+    font-size: 0.8rem;
+
+    position:relative;
+    background: white;
+}
+    .CategoryList a{
+        text-decoration: none;
+        color: inherit;
+    }
+
+.CategoryList div:hover{
+    background: #1771ff;
+    cursor: pointer;
+    color: white;
+}
+/*END OF MANAGER*/
+.AdminContainer {
+    width: 100%;
+    height: 100%;
+}
+.adminbox{
+    height: 100%;
+    align-content: center;
+    justify-content: center;
+    align-items:center;
+    background: white;
+    width: 100%;
+    display:flex;
+}
+.adminleft{
+    width: 40%;
+}
+.admininput {
+    display: flex;
+    width: 480px;
+    height: 500px;
+    background: white;
+    border-radius: 18px;
+    padding-block: 3%;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    position: relative;
+    z-index: 1;
+}
+
+#emailinput{
+    display:flex;
+    border-radius: 5px;
+    border: 2px solid #c1c1c1;
+    min-height: 45px;
+    min-width: 100%;
+}
+#emailinput:focus{
+    border: 0;
+    outline: 3px solid #878787;
+}
+
+.admininput p input{
+    margin-right: 30px;
+    margin-block: 10px;
+
+    transform: scale(1.8);
+}
+.admininput button{
+    position: absolute;
+    bottom: 30px;
+    right: 30px;
+    font-size: 1.4rem;
+}
+
+.greencell {
+    background: #9ce488;
+    font-size: 1.5rem;
+    max-width: 99px;
+    min-width: 99px;
+    align-content:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height: 58px;
+    margin-top:1px;
+    z-index:1;
+    align-self:center;
+}
+
+.admininput {
+ 
+
+}
+
+.adminbox table{
+    width: fit-content;
+}
+.tablerole{
+
+    max-width: 100px;
+    min-width: 100px;
+    background: red;
+}
+.adminbox tr {
+    display: flex;
+    height: 60px;
+}
+.tablemail{
+    width: 400px;
+}
+.adminbox td {
+
+    display: flex;
+    height: 100%;
+    justify-content: center;
+}
+
+
+
+
+
+/*STOCK*/
+
+.StockList{
+    
+}
+
+.StockList .searchbarcontainer{
+    width: 65%;
+}
+.StockContainer {
+    background: #e1e1e1;
+    overflow-y: scroll;
+}
+
+    .StockContainer .webtitle {
+        color: #313131;
+        font-size: 7vh;
+        position: absolute;
+    }
+
+.stocktable {
+    width: 100%;
+
+    width: 70vw;
+    transition: transform 0.3s;
+}
+
+    .stocktable th {
+        font-size: 1.3rem;
+        color: #2c2c2c;
+    }
+
+    .stocktable td {
+        height: 50px;
+    }
+
+.StockContainer table {
+}
+
+.tdcolor1 {
+    background: #bdbdbd;
+}
+
+.stocktable input {
+    width: 80px;
+    border: 0;
+    border-radius: 4px;
+}
+
+.stockbtns {
+    flex-wrap: nowrap;
+    white-space: nowrap;
+}
+
+    .stockbtns button {
+        width: 40px;
+        border: none;
+        margin-inline: 15px;
+    }
+
+.resetbtn {
+    width: 90px;
+    width: 80px !important;
+}
+
+#notif {
+}
+/*END OF STOCK*/
+
+
+/*RESERVATIONS*/
+
+
+:root {
+    --BorderColor: #c1c1c1;
+}
+
+
+.ReservationsDiv {
+    display: flex;
+    width: 100%;
+    background: red;
+    height: 25%;
+}
+.OneReservation {
+    width: 1100px;
+    height: 110px;
+    background: white;
+    position: relative;
+    
+    display: flex;
+    flex-direction:column;
+    overflow: hidden;
+    border-radius: 4px;
+    border: 1px solid var(--BorderColor);
+
+
+}
+.ReservId {
+    color: black;
+    position: absolute;
+    top: 5px;
+    left: 30px;
+    font-size: 1.3rem;
+    font-family: 'Cairo', sans-serif;
+}
+.ReservationData{
+    display:flex;
+    width: 100%;
+    height: 100%;
+    font-size: 1.0rem;
+    align-self: center;
+    padding: 0px;
+    align-items: center;
+}
+.ReservUser {
+    border-right: 1px solid var(--BorderColor);
+    height: 100%;
+    justify-content: center;
+    align-content: center;
+    display: flex;
+    align-items: center;
+    padding-inline: 2%;
+    box-shadow: inset 0px 0px 10px 0 rgba(0,0,0, 0.2);
+}
+.ReservationDate {
+    height: 100%;
+    border-right: solid 1px var(--BorderColor);
+    font-size: 1.2rem;
+}
+.ReservationDate div{
+    height: 50%;
+    display:flex;
+    align-items: center;
+    padding-inline: 20px;
+
+}
+    .ReservationDate div:nth-child(1) {
+        border-bottom: solid 1px var(--BorderColor);
+        
+    }
+.valid{
+    background: #3abf2f;
+    height: 100%;
+    width: 100%;
+    color: white;
+    justify-content: center;
+    font-size: 1.6rem;
+}
+.notvalid {
+    background: #717171;
+}
+.ReservTotal{
+    padding-block: 20px;
+    width: 200px;
+    justify-content: center;
+    display:flex;
+    border-right: 1px solid var(--BorderColor);
+    height: 100%;
+    align-items:center;
+    flex-direction: column;
+    
+}
+.ReservTotal div{
+    display:flex;
+    align-items: center; 
+
+}
+.downloadpdf{
+    width: 200px;
+}
+.ReservationsList{
+    width: 100%;
+
+
+    display:flex;
+    flex-direction: column;
+
+    align-items: center;
+}
+
+.ReservPDF{
+    height: 100%;
+    flex-grow: 1;
+
+    justify-content:center;
+    display:flex;
+    align-items:center;
+
+}
+.FileReservation{
+    width: 50px;
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+    display:flex;
+    font-size: 1rem;
+}
+.FileReservation input {
+    width: 25px;
+    height: 25px;
+  
+}
+.ReservationPage{
+    flex-grow: 1;
+    flex-direction:row;
+    display:flex;
+    background: red;
+    height: 93%;
+}
+.ReservationsMenu {
+    padding-block: 30px;
+    padding-inline: 30px;
+    width: 400px;
+    font-family: 'Montserrat', sans-serif;
+    background: white;
+    justify-content: space-between;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+.ReservationsMenu button{
+    height: 60px;
+    margin-block: 10px;
+    width: 100%;
+}
+.OneReservationItems {
+    
+    width: 1100px;
+    overflow:hidden;
+    transition: 0.3s;
+    max-height:0px;
+ 
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    
+}
+.ItemsExpander {
+    margin-bottom: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background:white;
+    border: 1px solid var(--BorderColor);
+    font-size: 1.5rem;
+    border-radius: 4px;
+    
+}
+.ItemsContainer {
+}
+.heightzero {
+    max-height: 400px;
+}
+.oneitem {
+    background: #f7f7f7;
+    width: 100%;
+    height: 35px;
+    align-items: center;
+    display: flex;
+
+    justify-content: space-evenly;
+    font-weight: 400;
+    font-size: 1.2rem;
+}
+    .oneitem:first-child {
+        font-family: 'Jura', sans-serif;
+    }
+.oneitem div{
+    height: 100%;
+    width: 100%;
+    border-right: 1px solid var(--BorderColor);
+    align-items:center;
+    display:flex;
+    justify-content:center;
+}
+.oneitem div:nth-child(1)
+{
+    width: 500px;
+}
+.oneitem div:nth-child(3){
+    width: 25%;
+
+}
+oneitemheader{
+    font-weight:800;
+}
+.oneitem div:nth-child(4)
+{
+    width: 550px;
+}
+.oneitem div:nth-child(5) {
+    width: 550px;
+}
+.oneitemheader{
+    font-weight: 800;
+}
+/*END OF RESERVATIONS*/
+
+
+/*SCHEMA*/
+
+.btn-selected{
+    background: #006aed;
+    color: white;
+}
+
+.SchemaHeader {
+    height: 100px;
+}
+.SchemaSection{
+    min-width: 400px;
+}
+.scroller {
+    overflow-y: scroll;
+    height: 80%;
+
+}
+
+.SchemaSection {
+    height: 90%;
+    align-self: center;
+    font-family: 'Quicksand', sans-serif;
+    width: 25%;
+    overflow-inline: hidden;
+
+
+}
+
+.entries {
+
+    height: 60px;
+    align-items: center;
+    margin-block: -1px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 100%;
+    border: 2px solid #e4e4e4;
+}
+.entries button{
+    margin-inline: 3px;
+}
+
+.SchemaSection a{
+    align-self: center;
+    align-content: center;
+    justify-content: center;
+    justify-items: center;
+    margin-inline: 4px;
+}
+
+.scroller::-webkit-scrollbar {
+    width: 7px;
+    border-radius: 10px;
+}
+
+a {
+    text-decoration: none;
+}
+
+.StockContainer a:visited {
+    color: inherit;
+}
+
+/* Track */
+.scroller::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 10px;
+}
+
+/* Handle */
+scroller::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 4px;
+}
+
+
+.Category {
+
+}
+.SubCategories {
+/*    -webkit-box-shadow: inset 0px 0px 10px 5px rgba(0,0,0,0.2);*/
+        
+    height: 40px;
+}
+.SchemaContainer h2 {
+    font-family: 'Quicksand', sans-serif;
+}
+
+.schema-element{
+    font-weight: 700;
+}
+/*end of SCHEMA*/

@@ -1,0 +1,161 @@
+﻿
+@{
+	Layout = "_Layout";
+}
+
+@using sigmaHashAlpha.Models.Architecture
+
+@model List<Product>
+
+<div class="d-flex  col-12 storecontainer">
+	<div id="resultapnd" style="display:none;"></div>
+	<vc:Filter />
+	<div class="d-flex flex-column flex-grow-1 col-12">
+	<div class="StoreBanner ">
+
+	</div>
+	<div class="StoreFilter">
+		<div>
+		</div>
+	</div>
+	<div class="d-flex w-100" style="height:fit-content; min-height: 1800px;">
+
+
+		<div class="StoreList">
+
+			<div class="sortBar col-12 bg-dark">
+				<div class="col-2">
+					<a asp-action="SetSort" asp-controller="Session" asp-route-sort="Alphabetical"
+					asp-route-actionname="Store" asp-route-controllername="Products">
+						<i class="bi bi-sort-alpha-down"></i> Ordernar por nombre 
+					</a>
+				</div>
+
+				<div class="col-2">
+					<a asp-action="SetSort" asp-controller="Session" asp-route-sort="Price" 
+					asp-route-actionname="Store" asp-route-controllername="Products">
+						<i class="bi bi-sort-alpha-down"></i> Ordernar por precio 
+					</a>
+				</div>
+
+				<div class="col-2" style="font-family: 'race_sportregular'; color: white;" >
+						
+					<i class="bi bi-gift"></i> Navidad gamer
+				
+				</div>
+
+				<div class="col-4 barimg">
+
+				</div>
+
+				<div class="col-4 barimg barimg2">
+
+				</div>
+				<div class="col-4 barimg barimg3">
+
+				</div>
+			</div>
+
+			<div class="align d-flex flex-column flex-grow-1 col-12">
+
+				<div class="StoreProductList col-12">
+					@{int i = 0;}
+					@foreach(var obj in Model)
+					{
+						<div class="Product">
+
+							<div class="ProductImg">
+								<img src="~/images/ProductImages/@obj.MainImage" /> 
+							</div>
+
+							<div class=" d-flex flex-column flex-grow-1 ProductDetails">
+								<div class="ProductTop">
+									<div class="ProductName">@obj.Category @obj.Brand @obj.Model </div>
+								</div>
+
+								<div class=ProductBottom>
+									<div class="ProductPrice">$ &nbsp @obj.Price</div>
+									<div class="ProdOptions">
+									@if(obj.ShipsNational)
+									{
+										<div class="w-100 ProductShips" ><span class="detail"><i class="bi bi-truck"></i> &nbsp Envios a todo el país &nbsp</span> </div>
+									}
+									</div>
+									<div class="ProductButtons ">
+										<button type="submit" name="id" value="@obj.ProductId" class="btn btn-primary storecartbtn addtocartbtn">Sumar al carrito</button>
+										<a asp-controller="Products" asp-action="ProductPage" asp-route-id="@obj.ProductId" class="btn btn-primary" >Detalles</a>
+									</div>
+
+									<div class="hiddenvalues">
+										@{
+											string urll = @obj.ProductId.Substring(0, 3).ToUpper(); 
+										}
+										<input type="hidden" data-url="@Url.Action("ProductData", @urll )" class="hidUrl">
+										<input   value="@obj.ProductId" class="hiddenid"/> 						
+									</div>
+								</div>
+
+							</div>
+
+						
+						</div>
+					}
+				</div>
+				<div>
+
+				</div>
+			</div>
+
+		</div>
+		<div class="StoreLeft StoreRight">
+
+		</div>
+
+	</div>
+	</div>
+
+</div>
+
+@section Scripts
+{
+
+    <script type="text/javascript">
+
+
+		
+		$('.addtocartbtn').each(function() {
+			
+		    let id = $(this).val();
+		    $(this).click(function(event) {
+		
+		
+		        $.ajax({
+		
+		            type: 'POST',
+					url: '@(Url.Action("Add","Cart"))',
+		            data: { id },
+		
+		            error: function() {
+		                alert("Error ocurrend. Please try again");
+		            }
+		        }).done(function(result) {
+		            $('#smallcartcont').load(' #smallcartcont > *');
+                    toastr.success('Se ha agregado el item al carrito', 'Carrito de compras');
+		        });
+		    });
+		});
+		$('.onepic').each(function () {
+			let k = -450 * p;
+			let s = k + 'px'
+			this.addEventListener('mouseover', function () {
+
+				$('.prodslider').css('margin-left', s);
+				console.log(k);
+			});
+			console.log(p);
+			p++;
+		});
+			
+    </script>
+
+}

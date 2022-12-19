@@ -1,0 +1,250 @@
+﻿@using sigmaHashAlpha.Models.Architecture
+@using sigmaHashAlpha.Models.ViewModels
+
+@{
+	Layout = "_Layout2";
+}
+
+@model ListAndCriteria
+
+	
+<div class="GeneralContainer StockContainer">
+	<div class="ProductListHeader" style="position: relative;">
+	    <div class="webtitle"><a asp-controller="Stock" asp-action="Index">Stock Manager</a></div>
+		
+		<div class = 'toggle-switch'>
+            <label class="switchlabel">
+                <input type = 'checkbox'>
+                <span class = 'DLslider'></span>
+            </label>
+
+        </div>
+
+	</div> 
+	
+
+	<div class="col-12">		
+		<div class="col-12 align-content-center d-flex flex-column justify-content-center align-items-center flex-grow-1 align-content-center">
+			<div class="searchbarcontainer centerer">
+				<div class="searchbar">
+
+					@using(Html.BeginForm("SearchBar","Stock", FormMethod.Post))
+					{
+						<button class="searchbtn" type="submit"><div class="searchmagn centerer"><i class="bi bi-search"></i></div></button>
+					}
+
+				</div>
+			</div>
+
+			<div class="stocktable">
+				
+				<table class="table">
+					<tr>
+						@using(Html.BeginForm("Criteria","Stock", FormMethod.Post))
+						{
+							<th style="width: 8%;">
+								<a asp-action="CriteriaCategory" asp-controller="Stock">Category</a>
+									<span style="font-size: 1.3rem; margin-left: 5px;"><i class="bi bi-sort-down-alt"></i></span>
+							</th>
+							<th>
+								Id
+							</th>
+							<th>
+								<a asp-action="CriteriaBrand" asp-controller="Stock">Brand</a><span style="font-size: 1.3rem; margin-left: 5px;"><i class="bi bi-sort-down-alt"></i></span>
+							</th>
+							<th>
+								Model
+							</th>
+							<th class="stock">
+								
+								@if(TempData["criteria"] == "stockdec" || TempData["criteria"] == null )
+								{
+									<a asp-action="CriteriaStockUp" asp-controller="Stock">Stock</a>
+									<span style="font-size: 1.3rem; margin-left: 5px;"><i class="bi bi-sort-down-alt"></i></span>
+								}
+								@if(TempData["criteria"] == "stockasc")
+								{
+									<a asp-action="CriteriaStockDown" asp-controller="Stock">Stock</a>
+									<span style="font-size: 1.3rem; margin-left: 5px;"><i class="bi bi-sort-up-alt"></i></span>
+								}
+							</th>
+						}
+
+					</tr>
+					@{var c = 1;}
+					@{string Class="";}
+					@foreach(var obj in Model.List)
+					{
+						@if(c % 2 == 0)
+						{
+							Class = "tdcolor1";
+						}
+						else
+						{
+							Class = "tdcolor2";
+						}
+						<tr class="@Class">
+							<td>
+								<div>
+									@obj.Category
+								</div>
+								
+							</td>
+							<td class="rowid">
+								@obj.ProductId
+							</td>
+							<td>
+								@obj.Brand
+							</td>
+							<td>
+								@obj.Model
+							</td>
+							<td class="stockfield">
+								@obj.Stock
+							</td>
+							<td class="stockbtns">
+								<input type="hidden" class="hiddenstock" value="@obj.Stock"/>
+								<input type="hidden" class="hiddenid" value="@obj.ProductId"/>
+								<input class="addinput" type="number" min="0" /><button class="btn btn-primary addbtn">+</button>
+								<input class="subinput" type="number" min="0" /><button class="btn btn-danger subbtn">-</button>
+
+							</td>
+						</tr>
+
+						c++;
+					}
+				</table>
+			</div>
+			
+			<div class="pagenumbcont">
+
+			</div>
+		</div>
+	</div>
+</div>
+
+
+@section Scripts
+{
+	
+
+	<script src="~/js/ProductList.js" asp-append-version="true"></script>
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+           
+            let margincount = 0;
+	
+            $('.addbtn').each(function() {
+
+                this.addEventListener('click', function(event) {
+
+                    let temp = this;
+                    event.stopPropagation();
+                    event.preventDefault();
+                    let id = $(this).parent().find('.hiddenid').val();
+                    let amount = $(this).parent().find('.addinput').val();
+                    let stock = $(this).parent().find('.hiddenstock').val();
+
+                    if (amount != null && amount != 0 && amount != NaN) {
+                        $.ajax({
+                            type: "POST",
+                            url: "@(Url.Action("ChangeStock","Stock"))",
+                            data: { id: id, amount: amount }
+
+                        }).done(function() {
+
+                            let num = parseInt(amount) + parseInt(stock);
+                            $(temp).parent().parent().find('.stockfield').text(num.toString());
+                            $(temp).parent().find('.addinput').val("");
+							$(temp).parent().find('.hiddenstock').val(num);
+							toastr.success('Stock has been modified succesfuly', 'Stock');
+                        });
+                    }
+
+                });
+
+            });
+
+				$('.subbtn').each(function() {
+
+					this.addEventListener('click', function(event) {
+                     
+					    let temp = this;
+					    event.stopPropagation();
+					    event.preventDefault();
+					    let id = $(this).parent().find('.hiddenid').val();
+					    let value = $(this).parent().find('.subinput').val();
+						
+                        let amount = parseInt(value);
+                        amount = amount * -1;
+					    let stock = $(this).parent().find('.hiddenstock').val();
+			
+
+					    if (!isNaN(amount)) {
+					        $.ajax({
+					            type: "POST",
+					            url: "@(Url.Action("ChangeStock","Stock"))",
+					            data: { id: id, amount: amount }
+
+					        }).done(function(result) {
+
+					            let num = parseInt(amount) + parseInt(stock);
+                                if (num < 0) {num = 0 }
+					            $(temp).parent().parent().find('.stockfield').text(num.toString());
+					            $(temp).parent().find('.subinput').val("");
+								$(temp).parent().find('.hiddenstock').val(num);
+                                toastr.success('Stock has been modified succesfuly', 'Stock');
+					        });
+					    }
+
+					});
+
+				});
+
+
+
+            if ($('#filtered').val() === true) {
+                $('.searchbox').value += $('#filtertext').val();
+			}
+
+			searchbox = document.getElementById('searchbox');
+			var search;
+			searchbox.onkeyup = function () {
+			    search = searchbox.value;
+			}
+
+            $('.pagenumb').each(function() 
+			{	
+                this.addEventListener('click', function() {
+                    let temp = this.val();
+                    if ($('#filtered').val() === true) {
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        let obj = {
+                            Filter: search,
+                            Page: temp
+                        };
+                        $.ajax({
+                            type: "POST",
+							url: "@(Url.Action("Search","Products"))",
+                            data: { obj },
+							contentType: "application/json; charset=utf-8",
+                            success: function() {
+                                alert('succ');
+                            },
+                            error: function() {
+                                alert('err');
+                            }
+                        }).done(function() {
+                            alert('done');
+                        });
+                    }
+
+                });
+
+            });
+
+		});	
+	</script>
+}
